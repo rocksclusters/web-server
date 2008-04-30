@@ -1,0 +1,533 @@
+<?xml version="1.0" standalone="no" ?>
+
+<kickstart>
+
+<description>
+WordPress configuration
+</description>
+
+<changelog>
+$Log: wordpress.xml,v $
+Revision 1.16  2008/04/29 19:43:03  bruno
+get rid of warning message
+
+Revision 1.15  2006/09/13 23:08:55  bruno
+permission cleanup
+
+Revision 1.14  2006/07/06 23:53:19  bruno
+stripped out old upgrade procedure
+
+Revision 1.13  2006/01/09 15:24:55  bruno
+RSS feed configuration
+
+Revision 1.12  2005/11/01 18:02:49  bruno
+more firefox beautification
+
+Revision 1.11  2005/10/18 00:28:30  bruno
+tune the web site
+
+Revision 1.10  2005/10/17 20:28:22  bruno
+- added link to roll docs
+
+- cleanup
+
+Revision 1.9  2005/10/17 18:51:37  bruno
+made the 'footer' dynamically built so we could include a secure link to
+the wordpress admin page.
+
+Revision 1.8  2005/10/12 01:25:24  bruno
+updates to the web site
+
+Revision 1.7  2005/09/20 20:47:36  bruno
+add a redirect to make the wordpress content the default homepage.
+
+Revision 1.6  2005/09/15 20:51:50  bruno
+change the first post
+
+Revision 1.5  2005/09/13 23:34:59  bruno
+touch ups
+
+Revision 1.4  2005/07/26 21:18:36  bruno
+touch ups
+
+Revision 1.3  2005/06/28 16:45:32  bruno
+added rocks theme
+
+Revision 1.2  2005/06/28 16:44:12  bruno
+more moving over to /var/www/html/wordpress
+
+Revision 1.1  2005/06/28 06:29:05  bruno
+the start of our new web site
+
+</changelog>
+
+<package>wordpress</package>
+<package>rocks-wordpress-theme</package>
+
+
+<post>
+
+<file name="/etc/wordpress/wp-config.php" owner="root.apache">
+&lt;?php
+// ** MySQL settings ** //
+define('DB_NAME', 'wordpress');     // The name of the database
+define('DB_USER', 'wordpress');     // Your MySQL username
+define('DB_PASSWORD', ''); // ...and password
+define('DB_HOST', 'localhost');     // 99% chance you won't need to change this value
+
+// Change the prefix if you want to have multiple blogs in a single database.
+$table_prefix  = 'wp_';   // example: 'wp_' or 'b2' or 'mylogin_'
+
+// Change this to localize WordPress.  A corresponding MO file for the
+// chosen language must be installed to wp-includes/languages.
+// For example, install de.mo to wp-includes/languages and set WPLANG to 'de'
+// to enable German language support.
+define ('WPLANG', '');
+
+/* Stop editing */
+
+# change ABSPATH to wordpress directory since __FILE__ contains  /etc
+#  due to sym link
+#define('ABSPATH', dirname(__FILE__).'/');
+define('ABSPATH', '/var/www/html/wordpress/');
+
+require_once(ABSPATH.'wp-settings.php');
+?&gt;
+</file>
+
+
+<!-- redirect the default directory lookup to wordpress -->
+<file name="/var/www/html/index.html" owner="root.apache">
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta HTTP-Equiv="Refresh" CONTENT="1; URL=/wordpress/"&gt;
+&lt;meta HTTP-EQUIV="expires" CONTENT="Wed, 20 Feb 2000 08:30:00 GMT"&gt;
+&lt;meta HTTP-EQUIV="Pragma" CONTENT="no-cache"&gt;
+&lt;head&gt;
+&lt;html&gt;
+</file>
+
+
+<!-- setup the wordpress database permissions -->
+<file name="/tmp/wordpress-perms.sql">
+create database wordpress;
+grant all privileges on wordpress.* to "wordpress"@"localhost" identified by "";
+</file>
+
+/usr/bin/mysql &lt; /tmp/wordpress-perms.sql
+
+
+<!-- lay down the initial data -->
+<file name="/tmp/wordpress-data.sql" perms="0400">
+-- MySQL dump 10.9
+--
+-- Host: localhost    Database: wordpress
+-- ------------------------------------------------------
+-- Server version	4.1.10a
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+--
+-- Table structure for table `wp_categories`
+--
+
+DROP TABLE IF EXISTS `wp_categories`;
+CREATE TABLE `wp_categories` (
+  `cat_ID` bigint(20) NOT NULL auto_increment,
+  `cat_name` varchar(55) NOT NULL default '',
+  `category_nicename` varchar(200) NOT NULL default '',
+  `category_description` longtext NOT NULL,
+  `category_parent` int(4) NOT NULL default '0',
+  PRIMARY KEY  (`cat_ID`),
+  KEY `category_nicename` (`category_nicename`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `wp_categories`
+--
+
+
+/*!40000 ALTER TABLE `wp_categories` DISABLE KEYS */;
+LOCK TABLES `wp_categories` WRITE;
+INSERT INTO `wp_categories` VALUES (1,'Uncategorized','uncategorized','',0);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `wp_categories` ENABLE KEYS */;
+
+--
+-- Table structure for table `wp_comments`
+--
+
+DROP TABLE IF EXISTS `wp_comments`;
+CREATE TABLE `wp_comments` (
+  `comment_ID` bigint(20) unsigned NOT NULL auto_increment,
+  `comment_post_ID` int(11) NOT NULL default '0',
+  `comment_author` tinytext NOT NULL,
+  `comment_author_email` varchar(100) NOT NULL default '',
+  `comment_author_url` varchar(200) NOT NULL default '',
+  `comment_author_IP` varchar(100) NOT NULL default '',
+  `comment_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `comment_date_gmt` datetime NOT NULL default '0000-00-00 00:00:00',
+  `comment_content` text NOT NULL,
+  `comment_karma` int(11) NOT NULL default '0',
+  `comment_approved` enum('0','1','spam') NOT NULL default '1',
+  `comment_agent` varchar(255) NOT NULL default '',
+  `comment_type` varchar(20) NOT NULL default '',
+  `comment_parent` int(11) NOT NULL default '0',
+  `user_id` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`comment_ID`),
+  KEY `comment_approved` (`comment_approved`),
+  KEY `comment_post_ID` (`comment_post_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `wp_comments`
+--
+
+
+/*!40000 ALTER TABLE `wp_comments` DISABLE KEYS */;
+LOCK TABLES `wp_comments` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `wp_comments` ENABLE KEYS */;
+
+--
+-- Table structure for table `wp_linkcategories`
+--
+
+DROP TABLE IF EXISTS `wp_linkcategories`;
+CREATE TABLE `wp_linkcategories` (
+  `cat_id` bigint(20) NOT NULL auto_increment,
+  `cat_name` tinytext NOT NULL,
+  `auto_toggle` enum('Y','N') NOT NULL default 'N',
+  `show_images` enum('Y','N') NOT NULL default 'Y',
+  `show_description` enum('Y','N') NOT NULL default 'N',
+  `show_rating` enum('Y','N') NOT NULL default 'Y',
+  `show_updated` enum('Y','N') NOT NULL default 'Y',
+  `sort_order` varchar(64) NOT NULL default 'rand',
+  `sort_desc` enum('Y','N') NOT NULL default 'N',
+  `text_before_link` varchar(128) NOT NULL default '&lt;li&gt;',
+  `text_after_link` varchar(128) NOT NULL default '&lt;br/&gt;',
+  `text_after_all` varchar(128) NOT NULL default '&lt;li&gt;',
+  `list_limit` int(11) NOT NULL default '-1',
+  PRIMARY KEY  (`cat_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `wp_links`
+--
+
+DROP TABLE IF EXISTS `wp_links`;
+CREATE TABLE `wp_links` (
+  `link_id` bigint(20) NOT NULL auto_increment,
+  `link_url` varchar(255) NOT NULL default '',
+  `link_name` varchar(255) NOT NULL default '',
+  `link_image` varchar(255) NOT NULL default '',
+  `link_target` varchar(25) NOT NULL default '',
+  `link_category` int(11) NOT NULL default '0',
+  `link_description` varchar(255) NOT NULL default '',
+  `link_visible` enum('Y','N') NOT NULL default 'Y',
+  `link_owner` int(11) NOT NULL default '1',
+  `link_rating` int(11) NOT NULL default '0',
+  `link_updated` datetime NOT NULL default '0000-00-00 00:00:00',
+  `link_rel` varchar(255) NOT NULL default '',
+  `link_notes` mediumtext NOT NULL,
+  `link_rss` varchar(255) NOT NULL default '',
+  PRIMARY KEY  (`link_id`),
+  KEY `link_category` (`link_category`),
+  KEY `link_visible` (`link_visible`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `wp_links`
+--
+
+
+/*!40000 ALTER TABLE `wp_links` DISABLE KEYS */;
+LOCK TABLES `wp_links` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `wp_links` ENABLE KEYS */;
+
+--
+-- Table structure for table `wp_options`
+--
+
+DROP TABLE IF EXISTS `wp_options`;
+CREATE TABLE `wp_options` (
+  `option_id` bigint(20) NOT NULL auto_increment,
+  `blog_id` int(11) NOT NULL default '0',
+  `option_name` varchar(64) NOT NULL default '',
+  `option_can_override` enum('Y','N') NOT NULL default 'Y',
+  `option_type` int(11) NOT NULL default '1',
+  `option_value` longtext NOT NULL,
+  `option_width` int(11) NOT NULL default '20',
+  `option_height` int(11) NOT NULL default '8',
+  `option_description` tinytext NOT NULL,
+  `option_admin_level` int(11) NOT NULL default '1',
+  `autoload` enum('yes','no') NOT NULL default 'yes',
+  PRIMARY KEY  (`option_id`,`blog_id`,`option_name`),
+  KEY `option_name` (`option_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `wp_options`
+--
+
+
+/*!40000 ALTER TABLE `wp_options` DISABLE KEYS */;
+LOCK TABLES `wp_options` WRITE;
+INSERT INTO `wp_options` VALUES
+(1,0,'siteurl','Y',1,'/wordpress',20,8,'WordPress web address',1,'yes'),
+(2,0,'blogname','Y',1,'<var name="Info_ClusterName"/>',20,8,'Blog title',1,'yes'),
+(3,0,'blogdescription','Y',1,'Manage Your Cluster',20,8,'Short tagline',1,'yes'),
+(4,0,'new_users_can_blog','Y',1,'0',20,8,'',1,'yes'),
+(5,0,'users_can_register','Y',1,'',20,8,'',1,'yes'),
+(6,0,'admin_email','Y',1,'<var name="Info_ClusterContact"/>',20,8,'',1,'yes'),
+(7,0,'start_of_week','Y',1,'1',20,8,'',1,'yes'),
+(8,0,'use_balanceTags','Y',1,'1',20,8,'',1,'yes'),
+(9,0,'use_smilies','Y',1,'1',20,8,'',1,'yes'),
+(10,0,'require_name_email','Y',1,'1',20,8,'',1,'yes'),
+(11,0,'comments_notify','Y',1,'1',20,8,'',1,'yes'),
+(12,0,'posts_per_rss','Y',1,'10',20,8,'',1,'yes'),
+(13,0,'rss_excerpt_length','Y',1,'50',20,8,'',1,'yes'),
+(14,0,'rss_use_excerpt','Y',1,'0',20,8,'',1,'yes'),
+(15,0,'use_fileupload','Y',1,'0',20,8,'',1,'yes'),
+(16,0,'fileupload_realpath','Y',1,'/var/www/html/wordpress/wp-content',20,8,'',1,'yes'),
+(17,0,'fileupload_url','Y',1,'/wp-content',20,8,'',1,'yes'),
+(18,0,'fileupload_allowedtypes','Y',1,'jpg jpeg gif png',20,8,'',1,'yes'),
+(19,0,'fileupload_maxk','Y',1,'300',20,8,'',1,'yes'),
+(20,0,'fileupload_minlevel','Y',1,'6',20,8,'',1,'yes'),
+(21,0,'mailserver_url','Y',1,'mail.example.com',20,8,'',1,'yes'),
+(22,0,'mailserver_login','Y',1,'login@example.com',20,8,'',1,'yes'),
+(23,0,'mailserver_pass','Y',1,'password',20,8,'',1,'yes'),
+(24,0,'mailserver_port','Y',1,'110',20,8,'',1,'yes'),
+(25,0,'default_category','Y',1,'1',20,8,'',1,'yes'),
+(26,0,'default_comment_status','Y',1,'open',20,8,'',1,'yes'),
+(27,0,'default_ping_status','Y',1,'open',20,8,'',1,'yes'),
+(28,0,'default_pingback_flag','Y',1,'1',20,8,'',1,'yes'),
+(29,0,'default_post_edit_rows','Y',1,'9',20,8,'',1,'yes'),
+(30,0,'posts_per_page','Y',1,'10',20,8,'',1,'yes'),
+(31,0,'what_to_show','Y',1,'posts',20,8,'',1,'yes'),
+(32,0,'date_format','Y',1,'F j, Y',20,8,'',1,'yes'),
+(33,0,'time_format','Y',1,'g:i a',20,8,'',1,'yes'),
+(34,0,'links_updated_date_format','Y',1,'F j, Y g:i a',20,8,'',1,'yes'),
+(35,0,'links_recently_updated_prepend','Y',1,'&lt;em&gt;',20,8,'',1,'yes'),
+(36,0,'links_recently_updated_append','Y',1,'&lt;em&gt;',20,8,'',1,'yes'),
+(37,0,'links_recently_updated_time','Y',1,'120',20,8,'',1,'yes'),
+(38,0,'comment_moderation','Y',1,'0',20,8,'',1,'yes'),
+(39,0,'moderation_notify','Y',1,'1',20,8,'',1,'yes'),
+(40,0,'permalink_structure','Y',1,'',20,8,'',1,'yes'),
+(41,0,'gzipcompression','Y',1,'0',20,8,'',1,'yes'),
+(42,0,'hack_file','Y',1,'0',20,8,'',1,'yes'),
+(43,0,'blog_charset','Y',1,'UTF-8',20,8,'',1,'yes'),
+(44,0,'moderation_keys','Y',1,'',20,8,'',1,'no'),
+(45,0,'active_plugins','Y',1,'a:1:{i:0;s:0:\"\";}',20,8,'',1,'yes'),
+(46,0,'home','Y',1,'http://<var name="Kickstart_PublicHostname"/>/wordpress',20,8,'',1,'yes'),
+(47,0,'category_base','Y',1,'',20,8,'',1,'yes'),
+(48,0,'ping_sites','Y',1,'http://rpc.pingomatic.com/',20,8,'',1,'yes'),
+(49,0,'advanced_edit','Y',1,'0',20,8,'',1,'yes'),
+(50,0,'comment_max_links','Y',1,'2',20,8,'',1,'yes'),
+(51,0,'default_email_category','Y',1,'1',20,8,'Posts by email go to this category',1,'yes'),
+(52,0,'recently_edited','Y',1,'a:3:{i:0;s:35:\"wp-content/themes/default/style.css\";i:1;s:9:\"index.php\";i:2;b:0;}',20,8,'',1,'no'),
+(53,0,'use_linksupdate','Y',1,'0',20,8,'',1,'yes'),
+(54,0,'template','Y',1,'default',20,8,'',1,'yes'),
+(55,0,'stylesheet','Y',1,'default',20,8,'',1,'yes'),
+(56,0,'comment_whitelist','Y',1,'1',20,8,'',1,'yes'),
+(57,0,'page_uris','Y',1,'',20,8,'',1,'yes'),
+(58,0,'blacklist_keys','Y',1,'',20,8,'',1,'no'),
+(59,0,'comment_registration','Y',1,'',20,8,'',1,'yes'),
+(60,0,'open_proxy_check','Y',1,'1',20,8,'',1,'yes'),
+(61,0,'rss_language','Y',1,'en',20,8,'',1,'yes'),
+(62,0,'html_type','Y',1,'text/html',20,8,'',1,'yes'),
+(63,0,'gmt_offset','Y',1,'-4',20,8,'',1,'yes');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `wp_options` ENABLE KEYS */;
+
+--
+-- Table structure for table `wp_post2cat`
+--
+
+DROP TABLE IF EXISTS `wp_post2cat`;
+CREATE TABLE `wp_post2cat` (
+  `rel_id` bigint(20) NOT NULL auto_increment,
+  `post_id` bigint(20) NOT NULL default '0',
+  `category_id` bigint(20) NOT NULL default '0',
+  PRIMARY KEY  (`rel_id`),
+  KEY `post_id` (`post_id`,`category_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `wp_post2cat`
+--
+
+
+/*!40000 ALTER TABLE `wp_post2cat` DISABLE KEYS */;
+LOCK TABLES `wp_post2cat` WRITE;
+INSERT INTO `wp_post2cat` VALUES (1,1,1);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `wp_post2cat` ENABLE KEYS */;
+
+--
+-- Table structure for table `wp_postmeta`
+--
+
+DROP TABLE IF EXISTS `wp_postmeta`;
+CREATE TABLE `wp_postmeta` (
+  `meta_id` bigint(20) NOT NULL auto_increment,
+  `post_id` bigint(20) NOT NULL default '0',
+  `meta_key` varchar(255) default NULL,
+  `meta_value` text,
+  PRIMARY KEY  (`meta_id`),
+  KEY `post_id` (`post_id`),
+  KEY `meta_key` (`meta_key`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `wp_postmeta`
+--
+
+
+/*!40000 ALTER TABLE `wp_postmeta` DISABLE KEYS */;
+LOCK TABLES `wp_postmeta` WRITE;
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `wp_postmeta` ENABLE KEYS */;
+
+--
+-- Table structure for table `wp_posts`
+--
+
+DROP TABLE IF EXISTS `wp_posts`;
+CREATE TABLE `wp_posts` (
+  `ID` bigint(20) unsigned NOT NULL auto_increment,
+  `post_author` int(4) NOT NULL default '0',
+  `post_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `post_date_gmt` datetime NOT NULL default '0000-00-00 00:00:00',
+  `post_content` longtext NOT NULL,
+  `post_title` text NOT NULL,
+  `post_category` int(4) NOT NULL default '0',
+  `post_excerpt` text NOT NULL,
+  `post_status` enum('publish','draft','private','static','object') NOT NULL default 'publish',
+  `comment_status` enum('open','closed','registered_only') NOT NULL default 'closed',
+  `ping_status` enum('open','closed') NOT NULL default 'open',
+  `post_password` varchar(20) NOT NULL default '',
+  `post_name` varchar(200) NOT NULL default '',
+  `to_ping` text NOT NULL,
+  `pinged` text NOT NULL,
+  `post_modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  `post_modified_gmt` datetime NOT NULL default '0000-00-00 00:00:00',
+  `post_content_filtered` text NOT NULL,
+  `post_parent` int(11) NOT NULL default '0',
+  `guid` varchar(255) NOT NULL default '',
+  `menu_order` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`ID`),
+  KEY `post_name` (`post_name`),
+  KEY `post_status` (`post_status`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+--
+-- Table structure for table `wp_users`
+--
+
+DROP TABLE IF EXISTS `wp_users`;
+CREATE TABLE `wp_users` (
+  `ID` bigint(20) unsigned NOT NULL auto_increment,
+  `user_login` varchar(60) NOT NULL default '',
+  `user_pass` varchar(64) NOT NULL default '',
+  `user_firstname` varchar(50) NOT NULL default '',
+  `user_lastname` varchar(50) NOT NULL default '',
+  `user_nickname` varchar(50) NOT NULL default '',
+  `user_nicename` varchar(50) NOT NULL default '',
+  `user_icq` int(10) unsigned NOT NULL default '0',
+  `user_email` varchar(100) NOT NULL default '',
+  `user_url` varchar(100) NOT NULL default '',
+  `user_ip` varchar(15) NOT NULL default '',
+  `user_domain` varchar(200) NOT NULL default '',
+  `user_browser` varchar(200) NOT NULL default '',
+  `user_registered` datetime NOT NULL default '0000-00-00 00:00:00',
+  `user_level` int(2) unsigned NOT NULL default '0',
+  `user_aim` varchar(50) NOT NULL default '',
+  `user_msn` varchar(100) NOT NULL default '',
+  `user_yim` varchar(50) NOT NULL default '',
+  `user_idmode` varchar(20) NOT NULL default '',
+  `user_activation_key` varchar(60) NOT NULL default '',
+  `user_status` int(11) NOT NULL default '0',
+  `user_description` longtext NOT NULL,
+  PRIMARY KEY  (`ID`),
+  UNIQUE KEY `user_login` (`user_login`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `wp_users`
+--
+
+
+/*!40000 ALTER TABLE `wp_users` DISABLE KEYS */;
+LOCK TABLES `wp_users` WRITE;
+INSERT INTO `wp_users` VALUES (1,'admin','<var name="Kickstart_PrivateMD5RootPassword"/>','','','Administrator','administrator',0,'<var name="Info_ClusterContact"/>','','','','','2005-06-27 18:32:33',10,'','','','nickname','',0,'');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE `wp_users` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+</file>
+
+/usr/bin/mysql -u wordpress wordpress &lt; /tmp/wordpress-data.sql
+
+
+rm -f /tmp/*sql
+
+</post>
+
+<post>
+<!-- make rocks the default theme -->
+(
+	cd /var/www/html/wordpress/wp-content/themes ;
+	mv default default.orig ;
+	ln -s rocks default
+)
+</post>
+
+<post>
+<!-- dynamically create a footer that has a secure link to admin the site -->
+
+<file name="/var/www/html/wordpress/wp-content/themes/rocks/footer.php">
+&lt;table class="credit"&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;
+&lt;a href="https://<var name="Kickstart_PublicHostname"/>/wordpress/wp-admin/"&gt;Add content to this web site&lt;a&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;div&gt;
+
+&lt;php do_action('wp_footer'); ?&gt;
+&lt;body&gt;
+&lt;html&gt;
+</file>
+
+<file name="/etc/httpd/conf.d/rocks-wordpress.conf">
+&lt;Directory /var/www/html/wordpress/wp-admin&gt;
+        AllowOverride None
+        SSLRequireSSL
+&lt;/Directory&gt;
+
+&lt;Directory /var/www/html/wordpress&gt;
+        &lt;Files wp-login.php&gt;
+                SSLRequireSSL
+        &lt;/Files&gt;
+&lt;/Directory&gt;
+</file>
+
+</post>
+
+</kickstart>
+
