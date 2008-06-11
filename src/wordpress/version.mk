@@ -1,2 +1,3 @@
-VERSION		= 1.5
+NAME		= wordpress
+VERSION		= 2.5.1
 RELEASE		= 1

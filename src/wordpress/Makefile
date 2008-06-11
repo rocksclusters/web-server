@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.10 2008/03/06 23:42:03 mjk Exp $
+# $Id: Makefile,v 1.11 2008/06/11 19:08:10 bruno Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,10 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.11  2008/06/11 19:08:10  bruno
+# katz instructed me to -- because you should do what mason instructs
+# you to do and then see what happens.
+#
 # Revision 1.10  2008/03/06 23:42:03  mjk
 # copyright storm on
 #
@@ -102,16 +106,27 @@
 #
 #
 
-MAKE.iscontrib  = 1
+PKGROOT		= /var/www/html/wordpress
 REDHAT.ROOT     = $(CURDIR)/../../
 ROCKSROOT       = ../../../../..
-
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 
-default:	rpm
 
-rpm::	$(HOME)/.rpmmacros
-	rpmbuild --rebuild --define "_datadir /var/www/html" \
-		wordpress-1.5-1.src.rpm
+build:
+	gunzip -c $(NAME)-$(VERSION).tar.gz | $(TAR) -xf -
+	(								\
+		cd $(NAME);						\
+	)
+	
 
+install::
+	mkdir -p $(ROOT)/$(PKGROOT)
+	(								\
+		cd $(NAME);						\
+		find . | cpio -pduv $(ROOT)/$(PKGROOT);			\
+	)
+
+clean::
+	rm -rf $(NAME)
+	rm -f $(NAME).spec.in
