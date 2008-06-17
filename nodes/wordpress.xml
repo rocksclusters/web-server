@@ -8,6 +8,9 @@ WordPress configuration
 
 <changelog>
 $Log: wordpress.xml,v $
+Revision 1.18  2008/06/17 17:37:31  bruno
+get rid of XML error
+
 Revision 1.17  2008/06/11 19:29:42  bruno
 new wordpress database schema
 
@@ -297,8 +300,6 @@ INSERT INTO `wp_options` VALUES
 (58,0,'db_version','7796','yes'),
 (59,0,'uploads_use_yearmonth_folders','1','yes'),
 (60,0,'upload_path','wp-content/uploads','yes'),
-(61,0,'secret','yOs1BzBL2TcCw1yfs&ZQ!g7ft
-(gw)OMPfHaZ88W)S2PE1hsvMq4ftuAH92qEHz%a','yes'),
 (62,0,'blog_public','1','yes'),
 (63,0,'default_link_category','2','yes'),
 (64,0,'show_on_front','posts','yes'),
