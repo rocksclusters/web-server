@@ -8,6 +8,13 @@ WordPress configuration
 
 <changelog>
 $Log: wordpress.xml,v $
+Revision 1.19  2008/07/18 20:49:07  bruno
+now have ability to build any appliance from rocks 'boot:' prompt. just
+type 'bulid appliance=xml-node-name', for example:
+'build appliance=vm-container-sever'
+
+change 'boot:' directive of 'frontend' to 'build'
+
 Revision 1.18  2008/06/17 17:37:31  bruno
 get rid of XML error
 
@@ -125,6 +132,7 @@ grant all privileges on wordpress.* to "wordpress"@"localhost" identified by "";
 
 <!-- lay down the initial data -->
 <file name="/tmp/wordpress-data.sql" perms="0400">
+<![CDATA[
 -- MySQL dump 10.10
 --
 -- Host: localhost    Database: wordpress
@@ -525,6 +533,7 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+]]>
 </file>
 
 /usr/bin/mysql -u wordpress wordpress &lt; /tmp/wordpress-data.sql
