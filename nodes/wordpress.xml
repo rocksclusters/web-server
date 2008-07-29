@@ -8,6 +8,9 @@ WordPress configuration
 
 <changelog>
 $Log: wordpress.xml,v $
+Revision 1.20  2008/07/29 16:46:50  bruno
+add latest wordpress
+
 Revision 1.19  2008/07/18 20:49:07  bruno
 now have ability to build any appliance from rocks 'boot:' prompt. just
 type 'bulid appliance=xml-node-name', for example:
@@ -80,6 +83,8 @@ the start of our new web site
 
 <post>
 
+mkdir -p /etc/wordpress
+
 <file name="/etc/wordpress/wp-config.php" owner="root.apache">
 &lt;?php
 // ** MySQL settings ** //
@@ -132,7 +137,6 @@ grant all privileges on wordpress.* to "wordpress"@"localhost" identified by "";
 
 <!-- lay down the initial data -->
 <file name="/tmp/wordpress-data.sql" perms="0400">
-<![CDATA[
 -- MySQL dump 10.10
 --
 -- Host: localhost    Database: wordpress
@@ -179,17 +183,6 @@ CREATE TABLE `wp_comments` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `wp_comments`
---
-
-
-/*!40000 ALTER TABLE `wp_comments` DISABLE KEYS */;
-LOCK TABLES `wp_comments` WRITE;
-INSERT INTO `wp_comments` VALUES (1,1,'Mr WordPress','','http://wordpress.org/','','2008-06-11 12:18:13','2008-06-11 19:18:13','Hi, this is a comment.<br />To delete a comment, just log in and view the post&#039;s comments. There you will have the option to edit or delete them.',0,'1','','',0,0);
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `wp_comments` ENABLE KEYS */;
-
---
 -- Table structure for table `wp_links`
 --
 
@@ -213,17 +206,6 @@ CREATE TABLE `wp_links` (
   KEY `link_category` (`link_category`),
   KEY `link_visible` (`link_visible`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `wp_links`
---
-
-
-/*!40000 ALTER TABLE `wp_links` DISABLE KEYS */;
-LOCK TABLES `wp_links` WRITE;
-INSERT INTO `wp_links` VALUES (1,'http://codex.wordpress.org/','Documentation','','',0,'','Y',1,0,'0000-00-00 00:00:00','','',''),(2,'http://wordpress.org/development/','Development Blog','','',0,'','Y',1,0,'0000-00-00 00:00:00','','','http://wordpress.org/development/feed/'),(3,'http://wordpress.org/extend/ideas/','Suggest Ideas','','',0,'','Y',1,0,'0000-00-00 00:00:00','','',''),(4,'http://wordpress.org/support/','Support Forum','','',0,'','Y',1,0,'0000-00-00 00:00:00','','',''),(5,'http://wordpress.org/extend/plugins/','Plugins','','',0,'','Y',1,0,'0000-00-00 00:00:00','','',''),(6,'http://wordpress.org/extend/themes/','Themes','','',0,'','Y',1,0,'0000-00-00 00:00:00','','',''),(7,'http://planet.wordpress.org/','WordPress Planet','','',0,'','Y',1,0,'0000-00-00 00:00:00','','','');
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `wp_links` ENABLE KEYS */;
 
 --
 -- Table structure for table `wp_options`
@@ -275,8 +257,8 @@ INSERT INTO `wp_options` VALUES
 (25,0,'date_format','F j, Y','yes'),
 (26,0,'time_format','g:i a','yes'),
 (27,0,'links_updated_date_format','F j, Y g:i a','yes'),
-(28,0,'links_recently_updated_prepend','<em>','yes'),
-(29,0,'links_recently_updated_append','</em>','yes'),
+(28,0,'links_recently_updated_prepend','&lt;em&gt;','yes'),
+(29,0,'links_recently_updated_append','&lt;/em&gt;','yes'),
 (30,0,'links_recently_updated_time','120','yes'),
 (31,0,'comment_moderation','0','yes'),
 (32,0,'moderation_notify','1','yes'),
@@ -323,7 +305,7 @@ INSERT INTO `wp_options` VALUES
 (74,0,'wp_user_roles','a:5:{s:13:\"administrator\";a:2:{s:4:\"name\";s:23:\"Administrator|User role\";s:12:\"capabilities\";a:49:{s:13:\"switch_themes\";b:1;s:11:\"edit_themes\";b:1;s:16:\"activate_plugins\";b:1;s:12:\"edit_plugins\";b:1;s:10:\"edit_users\";b:1;s:10:\"edit_files\";b:1;s:14:\"manage_options\";b:1;s:17:\"moderate_comments\";b:1;s:17:\"manage_categories\";b:1;s:12:\"manage_links\";b:1;s:12:\"upload_files\";b:1;s:6:\"import\";b:1;s:15:\"unfiltered_html\";b:1;s:10:\"edit_posts\";b:1;s:17:\"edit_others_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:10:\"edit_pages\";b:1;s:4:\"read\";b:1;s:8:\"level_10\";b:1;s:7:\"level_9\";b:1;s:7:\"level_8\";b:1;s:7:\"level_7\";b:1;s:7:\"level_6\";b:1;s:7:\"level_5\";b:1;s:7:\"level_4\";b:1;s:7:\"level_3\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:17:\"edit_others_pages\";b:1;s:20:\"edit_published_pages\";b:1;s:13:\"publish_pages\";b:1;s:12:\"delete_pages\";b:1;s:19:\"delete_others_pages\";b:1;s:22:\"delete_published_pages\";b:1;s:12:\"delete_posts\";b:1;s:19:\"delete_others_posts\";b:1;s:22:\"delete_published_posts\";b:1;s:20:\"delete_private_posts\";b:1;s:18:\"edit_private_posts\";b:1;s:18:\"read_private_posts\";b:1;s:20:\"delete_private_pages\";b:1;s:18:\"edit_private_pages\";b:1;s:18:\"read_private_pages\";b:1;s:12:\"delete_users\";b:1;s:12:\"create_users\";b:1;s:17:\"unfiltered_upload\";b:1;s:14:\"edit_dashboard\";b:1;}}s:6:\"editor\";a:2:{s:4:\"name\";s:16:\"Editor|User role\";s:12:\"capabilities\";a:34:{s:17:\"moderate_comments\";b:1;s:17:\"manage_categories\";b:1;s:12:\"manage_links\";b:1;s:12:\"upload_files\";b:1;s:15:\"unfiltered_html\";b:1;s:10:\"edit_posts\";b:1;s:17:\"edit_others_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:10:\"edit_pages\";b:1;s:4:\"read\";b:1;s:7:\"level_7\";b:1;s:7:\"level_6\";b:1;s:7:\"level_5\";b:1;s:7:\"level_4\";b:1;s:7:\"level_3\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:17:\"edit_others_pages\";b:1;s:20:\"edit_published_pages\";b:1;s:13:\"publish_pages\";b:1;s:12:\"delete_pages\";b:1;s:19:\"delete_others_pages\";b:1;s:22:\"delete_published_pages\";b:1;s:12:\"delete_posts\";b:1;s:19:\"delete_others_posts\";b:1;s:22:\"delete_published_posts\";b:1;s:20:\"delete_private_posts\";b:1;s:18:\"edit_private_posts\";b:1;s:18:\"read_private_posts\";b:1;s:20:\"delete_private_pages\";b:1;s:18:\"edit_private_pages\";b:1;s:18:\"read_private_pages\";b:1;}}s:6:\"author\";a:2:{s:4:\"name\";s:16:\"Author|User role\";s:12:\"capabilities\";a:10:{s:12:\"upload_files\";b:1;s:10:\"edit_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:4:\"read\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:12:\"delete_posts\";b:1;s:22:\"delete_published_posts\";b:1;}}s:11:\"contributor\";a:2:{s:4:\"name\";s:21:\"Contributor|User role\";s:12:\"capabilities\";a:5:{s:10:\"edit_posts\";b:1;s:4:\"read\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:12:\"delete_posts\";b:1;}}s:10:\"subscriber\";a:2:{s:4:\"name\";s:20:\"Subscriber|User role\";s:12:\"capabilities\";a:2:{s:4:\"read\";b:1;s:7:\"level_0\";b:1;}}}','yes'),
 (75,0,'update_core','O:8:\"stdClass\":5:{s:12:\"last_checked\";i:1213211907;s:15:\"version_checked\";s:5:\"2.5.1\";s:8:\"response\";s:6:\"latest\";s:3:\"url\";s:30:\"http://wordpress.org/download/\";s:7:\"current\";s:5:\"2.5.1\";}','yes'),
 (77,0,'current_theme','WordPress Default','yes'),
-(78,0,'sidebars_widgets','a:1:{s:13:\"array_version\";i:3;}','yes'),
+(78,0,'sidebars_widgets','a:1:{s:13:\"array_version\";i:3;}','yes');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `wp_options` ENABLE KEYS */;
 
@@ -341,16 +323,6 @@ CREATE TABLE `wp_postmeta` (
   KEY `post_id` (`post_id`),
   KEY `meta_key` (`meta_key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `wp_postmeta`
---
-
-
-/*!40000 ALTER TABLE `wp_postmeta` DISABLE KEYS */;
-LOCK TABLES `wp_postmeta` WRITE;
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `wp_postmeta` ENABLE KEYS */;
 
 --
 -- Table structure for table `wp_posts`
@@ -386,10 +358,6 @@ CREATE TABLE `wp_posts` (
   KEY `post_name` (`post_name`),
   KEY `type_status_date` (`post_type`,`post_status`,`post_date`,`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `wp_posts`
---
 
 --
 -- Table structure for table `wp_term_relationships`
@@ -533,7 +501,6 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-]]>
 </file>
 
 /usr/bin/mysql -u wordpress wordpress &lt; /tmp/wordpress-data.sql
