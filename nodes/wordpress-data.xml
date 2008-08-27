@@ -8,6 +8,9 @@ WordPress data
 
 <changelog>
 $Log: wordpress-data.xml,v $
+Revision 1.15  2008/08/27 18:42:14  bruno
+tweaks
+
 Revision 1.14  2008/04/24 12:51:00  bruno
 the users guide is now the base roll users guide
 
@@ -61,17 +64,16 @@ touch ups
 
 <file name="/tmp/rocks-wp.sql">
 
-<!-- link categories -->
-	<!-- generic links -->
-insert into wp_linkcategories
-	values (1,'Rocks','N','Y','N','Y','Y','id','N',
-		'&lt;li&gt;','&lt;br/&gt;','&lt;li&gt;',-1) ;
+update wp_options set
+	option_value='http://<var name="Kickstart_PublicHostname"/>/wordpress'
+	where option_name='siteurl';	
 
-	<!-- 'monitor' links (e.g., ganglia, scms-web, clumon, etc. -->
-insert into wp_linkcategories
-	values (2,'Monitor','N','Y','N','Y','Y','id','N',
-		'&lt;li&gt;','&lt;br/&gt;','&lt;li&gt;',-1);
+insert into wp_users values (2, 'admin',
+	'<var name="Kickstart_PrivatePortableRootPassword"/>', 'admin',
+	'<var name="Info_ClusterContact"/>', '', NOW(), '', 0, 'admin');
 
+insert into wp_terms values
+	(1, 'Cluster Links', 'clusterlink', 0);
 
 <!-- put in the initial links -->
 
@@ -89,7 +91,6 @@ insert into wp_links (link_name, link_url, link_category)
 	values ('Support',
 	'https://lists.sdsc.edu/mailman/listinfo.cgi/npaci-rocks-discussion',
 	1);
-
 
 <!-- put in the initial posts -->
 
