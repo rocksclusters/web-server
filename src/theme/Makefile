@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.12 2008/03/06 23:42:03 mjk Exp $
+# $Id: Makefile,v 1.13 2008/08/27 18:37:34 bruno Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,9 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.13  2008/08/27 18:37:34  bruno
+# tweak
+#
 # Revision 1.12  2008/03/06 23:42:03  mjk
 # copyright storm on
 #
@@ -119,8 +122,9 @@ install::
 
 	$(INSTALL) -m 0444 *php $(ROOT)/$(PKGROOT)/
 	$(INSTALL) -m 0444 *css $(ROOT)/$(PKGROOT)/
-	$(INSTALL) -m 0444 RSS.gif $(ROOT)/$(PKGROOT)/
+	$(INSTALL) -m 0444 readme.txt $(ROOT)/$(PKGROOT)/
 
 	-$(INSTALL) -m 0444 images/*jpg $(ROOT)/$(PKGROOT)/images
 	-$(INSTALL) -m 0444 images/*png $(ROOT)/$(PKGROOT)/images
+	-$(INSTALL) -m 0444 images/*gif $(ROOT)/$(PKGROOT)/images
 
