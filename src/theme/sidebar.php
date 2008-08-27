@@ -1,120 +1,34 @@
-<div id="menu">
-<ul>
+<div id="content">
+		<div id="cA">
+			<div class="Ctopleft"></div>
+			<h3>SEARCH</h3>
+			<div id="search">
+<form method="get" id="searchform" action="<?php bloginfo('url'); ?>/">
+<input type="text" value="<?php the_search_query(); ?>" name="s" class="search" /><input type="submit" class="submit" value="Search" /></form>
+			</div><!-- search -->
+			<p>&nbsp;</p>
+<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar() ) : ?>
 
-<!-- Search field
-<li>
-<?php /* If this is a category archive */ if (is_category()) { ?>
+<h3>Cluster Links</h3>
 <ul>
-<li id="search">
-<form id="searchform" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="text" name="s" id="s" size="20" /> <input type="submit" value="<?php _e('Search'); ?>" />
-</form>
-</li>
+	<?php wp_list_bookmarks('categorize=0&title_li='); ?>
 </ul>
 
-
-<?php /* If this is a yearly archive */ } elseif (is_home()) { ?>
+<h3>Archives</h3>
 <ul>
-<li id="search">
-<form id="searchform" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="text" name="s" id="s" size="20" /> <input type="submit" value="<?php _e('Search'); ?>" />
-</form>
-</li>
+	<?php wp_get_archives('title_li='); ?>
 </ul>
 
-<?php /* If this is a yearly archive */ } elseif (is_day()) { ?>
+<h3>Meta</h3>
 <ul>
-<li id="search">
-<form id="searchform" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="text" name="s" id="s" size="20" /> <input type="submit" value="<?php _e('Search'); ?>" />
-</form>
-</li>
-</ul>
-
-<?php /* If this is a monthly archive */ } elseif (is_month()) { ?>
-<ul>
-<li id="search">
-<form id="searchform" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="text" name="s" id="s" size="20" /> <input type="submit" value="<?php _e('Search'); ?>" />
-</form>
-</li>
-</ul>
-
-<?php /* If this is a yearly archive */ } elseif (is_year()) { ?>
-<ul>
-<li id="search">
-<form id="searchform" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="text" name="s" id="s" size="20" /> <input type="submit" value="<?php _e('Search'); ?>" />
-</form>
-</li>
-</ul>
-
-<?php /* If this is a monthly archive */ } elseif (is_search()) { ?>
-<ul>
-<li id="search">
-<form id="searchform" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="text" name="s" id="s" size="20" /> <input type="submit" value="<?php _e('Search'); ?>" />
-</form>
-</li>
-</ul>
-
-<?php /* If this is a monthly archive */ } elseif (isset($_GET['paged']) && !empty($_GET['paged'])) { ?>
-<ul>
-<li id="search">
-<form id="searchform" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="text" name="s" id="s" size="20" /> <input type="submit" value="<?php _e('Search'); ?>" />
-</form>
-</li>
-</ul>
-
-<?php /* If this is a monthly archive */ } elseif (is_page()) { ?>
-
-
-<?php } ?>
-</li>
-
+	<?php wp_register(); ?>
+	<li><?php wp_loginout(); ?></li>
+<!-- 
+	<li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress</a></li>
 -->
-
-<!-- <?php get_links_list(); ?> -->
-
-<?php if (function_exists('wp_theme_switcher')) { ?>
-<li><h2><?php _e('Themes'); ?></h2>
-<?php wp_theme_switcher('dropdown'); ?>
-</li>
-<?php } ?>
-
-<li><h2><?php _e('Recent News'); ?></h2>
-<ul>
-<?php
-	$i = 1;
-	$posts_per_page = get_settings('posts_per_page');
-
-	$posts_list = wp_get_recent_posts();
-	foreach ($posts_list as $entry) {
-		if ($entry['post_status'] == 'publish') {
-			if ($i > $posts_per_page) {
-				$headline = $entry['post_title'];
-				$url = "/wordpress/?p=".$entry['ID'];
-				echo "<li><a href=\"".$url."\">".$headline."</a></li>";
-			}
-			$i = $i + 1;
-		}
-	}
-?>
+	<?php wp_meta(); ?>
 </ul>
-</li>
+				<?php endif; ?>
 
-<li><h2><?php _e('Archives'); ?></h2>
-<ul>
-<?php wp_get_archives('type=monthly'); ?>
-</ul>
-</li>
+		</div><!-- cA -->
 
-<li id="meta"><h2><?php _e(''); ?></h2>
-<ul>
-<li><a href="<?php bloginfo('home') ?>/wp-rss2.php" title="<?php _e('Syndicate this site using RSS'); ?>"><?php _e('<abbr title="Really Simple Syndication"><img src="wp-content/themes/rocks/RSS.gif"></abbr>'); ?></a>
-</li>
-
-</ul>
-</div>
-<!-- end sidebar -->

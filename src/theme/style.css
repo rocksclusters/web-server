@@ -1,346 +1,185 @@
-/*
-Theme Name: rocks
-Theme URI: http://www.rocksclusters.org/
-Description: rocks
-Version: 1.0
-
-Author: 3LB
-*/
-
-body {
-	background: #FEF4E2;
-	font-family: Lucida Grande, Verdana, sans-serif;
-	margin: 0;
-	padding: 0;
-	text-align: center;
-}
-
-a {
-	font-size: 12px;
-	color: #495865;
-}
-
-a:hover {
-	color: #6F6F6F;
-}
-
-#rap {
-	background: #FFFFFF;
-	margin: 0 auto 0 auto;
-	width: 800px;
-	text-align: left;
-	border: 3px solid #5F707A;
-}
-
-#content {
-	position: relative;
-	left: 30px;
-	float: left;
-	padding: 0;
-	width: 450px;
-	color: #495865;
-	font-size: 11px;
-}
-
-/*
- * web site images on the main page are displayed in 'h1'
- */
-#content h1#header {
-	height: 274px;
-	width: 670px;
-	text-align: center;
-	color: #CCCCCC;
-	display: block;
-	margin-left: auto;
-	margin-right: auto
-}
-
-#content h2 {
-	border-bottom: 1px solid #6F6F6F;
-	color: #5F707A;
-	font-size: 12px;
-	margin: 20px 0 5px 0;
-	padding: 0 0 3px 0;
-	text-align: right;
-	width: 440px;
-}
-
-#content h2#comments a {
-	color: #5F707A;
-	font-size: 14px;
-}
-
-#content h3 img {
-	border: 0;
-}
-
-#content div.post {
-	margin: 0 0 20px 0;
-	padding: 0;
-}
-
-#content p {
-	font-size: 12px;
-}
-
-#content div.post p, #content div.post li {
-	font-family: Lucida Grande, Verdana, sans-serif;
-	font-size: 12px;
-	line-height: 130%;
-}
-
-#content div.post div.storycontent p {
-	width: 90%;
-}
-
-#content div.post div.storycontent ul, #content div.post div.storycontent ol {
-	margin-left: 0;
-	padding-left: 0;
-}
-
-#content div.post div.storycontent li {
-	margin-left: 30px;
-	width: 80%;
-}
-
-#content div.post div.storycontent blockquote {
-	background: #fef7e9;
-	border: 1px solid #e6ddcb;
-	border-left: 2px solid #6F6F6F;
-	font-family: Georgia, Times New Roman, serif;
-	font-size: 11px;
-	margin-left: 20px;
-	padding: 4px 4px 4px 7px;
-	width: 80%;
-}
-
-#content h3 {
-	margin: 0 0 5px 0;
-	padding: 0;
-}
-
-#content h3.storytitle, #content h3.storytitle a {
-	font-size: 14px;
-	color: #5F707A;
-	text-decoration: none
-}
-
-#content h3.storytitle a:hover {
-	color: #495865;
-	text-decoration: none
-}
-
-#content div.post p {
-	width: 90%;
-}
-
-#content div.post div.meta, #content div.post div.meta a {
-	color: #867b64;
-	font-family: Lucida Grande, Verdana, sans-serif;
-	font-size: 10px;
-}
-
-#content div.post div.meta li a:hover
-{
-	color: #686050;
-}
-
-#content div.post div.meta ul, #content div.post div.meta li {
-	display: inline;
-	margin: 0;
-	padding: 0;
-}
-
-
-#content div.post div.feedback {
-	font-size: 12px;
-}
-
-#content #commentlist {
-	margin: 20px 20px 20px 23px;
-	padding: 0;
-}
-
-#content #commentlist li {
-	margin-bottom: 10px;
-}
-
-#content #commentform input, #content #commentform textarea {
-	background: #fef7e9;
-	border: 1px solid #6F6F6F;
-	font-size: 11px;
-	padding: 2px;
-}
-
-#content #commentform textarea {
-	height: 150px;
-	width: 90%;
-}
-
-#content code {
-	color: #800000
-}
-
-#content ul {
-	display: inline;
-	margin: 0;
-	padding: 0;
-	list-style-type: circle;
-}
-
-#navcontainer ul {
-	background: #5F707A;
-	padding: 0;
-	margin: 0;
-	/*
-	border-top: 1px solid #DFDFDF;
-	*/
-	border-bottom: 3px solid #5F707A;
-	float: left;
-	width: 800px;
-	font: 15px arial, helvetica, sans-serif;
-}
-
-#navcontainer ul li {
-	display: inline;
-}
-
-#navcontainer ul li.page_item a {
-	padding: 10px 14px 11px 14px;
-	background: #9C9D95;
-	color: #ffffff;
-	text-decoration: none;
-	font-weight: bold;
-	float: left;
-	border-right: 1px solid #FFFFFF;
-}
-
-#navcontainer ul li.page_item a:hover {
-	color: #FFFFFF;
-	background: #C9C0B0;
-}
-
-#navcontainer ul li.current_page_item a {
-	padding: 10px 14px 11px 14px;
-	background: #C9C0B0;
-	color: #FFFFFF;
-	text-decoration: none;
-	float: left;
-	border-right: 1px solid #DFDFDF;
-}
-
-#navcontainer ul li.current_page_item a:hover {
-	background: #6F6F6F;
-}
-
-#menu {
-	clear: right;
-	float: left;
-	position: relative;
-	top: 10px;
-	left: 50px;
-	margin: 0 0 10px 0px;
-	width: 220px;
-}
-
-#menu ul {
-	list-style-type: none;
-	margin: 10px 0;
-	padding: 0;
-}
-
-#menu ul li {
-	color: #5F5F5F;
-	font-size: 12px;
-	margin: 0;
-	padding: 0;
-}
-
-#menu ul li p {
-	font-size: 12px;
-	width: 190px;
-	font-weight: bold;
-}
-
-#menu ul li h2 {
-	border-bottom: 1px solid;
-	width: 190px;
-	font-size: 15px;
-	font-weight: bold;
-	margin: 0;
-	padding: 0;
-}
-
-#menu ul li ul {
-	margin: 5px 0 15px 10px;
-}
-
-#menu ul li ul li {
-	font-weight: normal;
-	margin: 0 0 3px 0;
-	padding: 0;
-	line-height: 12px
-}
-
-#menu ul li#winamp ul li {
-	width: 190px
-}
-
-#menu ul li ul li a {
-	color: #5F5F5F;
-	text-decoration: none;
-}
-
-#menu ul li ul li a:hover {
-	font-weight: bold;
-	text-decoration: none
-}
-
-#searchform {
-	margin: 2px 0 15px 0;
-}
-
-#searchform input {
-	background: #FFFFFF;
-	border: 1px solid #6F6F6F;
-	font-size: 11px;
-	margin-top: 3px;
-	padding: 2px;
-}
-
-p.credit {
-	color: #FFFFFF;
-	background: #5F707A;
-	border-top: 1px solid #DFDFDF;
-	clear: both;
-	font-size: 12px;
-	margin: 0 auto 0 auto;
-	padding: 16px 0 17px 0;
-	text-align: center;
-	width: 800px;
-}
-
-p.credit a {
-	color: #ffffff
-}
-
-table.credit {
-	color: #FFFFFF;
-	background: #5F707A;
-	border-top: 1px solid #DFDFDF;
-	clear: both;
-	font-size: 12px;
-	margin: 0 auto 0 auto;
-	padding: 16px 0 17px 0;
-	text-align: center;
-	width: 100%;
-	
-}
-
-table.credit td {
-	width: 33%;
-}
-
-table.credit a {
-	color: #ffffff
-}
+/*
+Theme Name: WP SymiSun
+Theme URI: http://www.themelab.com/free-wordpress-themes/
+Description: A beautiful surreal theme.  Visit <a href="http://www.themelab.com">Theme Lab</a> for more themes and <a href="http://symisun.com">SymiSun</a> for web development services.
+Version: 1.0
+Author: Theme Lab
+Author URI: http://www.themelab.com/
+*/
+
+/*  
+Template ID: 01
+Template URI: http://symisun.com/templates/free/01/
+Description: The first free CSS template released by SymiSun*
+Version: 1.1
+Developed by SymiSun*
+Company URI: http://symisun.com/
+
+	SymiSun* Free CSS Template 01 v1.1
+	http://symisun.com/templates/free/01/
+
+	This template was designed and developed by
+	SymiSun* to celebrate the launch of symisun.com
+
+	The CSS, XHTML and design is licensed under a
+	a Creative Commons Attribution 2.5 License
+
+*/
+
+/* Global white space reset */
+* {padding:0; margin:0}
+h1, h2, h3, h4, h5, h6, p, pre, blockquote, label, ul, ol, dl, fieldset, address {margin:0 10px}
+li, dd {margin-left:15px}
+fieldset {padding:6px}
+
+/* Undo default HTML styling of common browsers */
+a:link, a:visited {text-decoration:none; color:#aaa; font-weight:bold}
+h1 a:link, h1 a:visited, h2 a:link, h2 a:visited, h3 a:link, h3 a:visited, h4 a:link, h4 a:visited {text-decoration:none; color:#1c4851}
+ul, ol {list-style:none}
+img {border:none}
+
+/* General */
+html, body {height:100%}
+body {
+	background:#282627 url('images/bg_general.gif') no-repeat top center;
+	color:#4e4a49;
+	text-align:center;
+	margin:0;
+	font:normal 11px/15px verdana,serif
+	}
+
+/* General links */
+a:hover {text-decoration:underline}
+a:active {text-decoration:none}
+a:focus, input:focus {outline:none}
+
+/* Paragraph and headings */
+p {margin:0 0 8px 0}
+h1 {font-size:14px}
+h2 {font-size:13px}
+h3 {font-size:12px; color:#000; margin:5px 15px}
+h4 {font-size:11px}
+h5 {font-size:10px}
+
+/* Forms */
+.submit {font:bold 12px verdana,serif; cursor:pointer!important; color:#1c4851; background:none; border:none; width:60px; margin:0 0 0 6px}
+.radio {margin:0 5px 0 0; background:none; border:none}
+.search {
+	width:150px;
+	height:18px;
+	font:normal 12px verdana;
+	color:#333;
+	border:1px solid #999;
+	background:url('images/bg_search_field.gif') no-repeat top left;
+	padding:5px 6px 1px 6px;
+	vertical-align:middle
+	}
+
+/* Who's your daddy */
+#daddy {
+	width:998px;
+	min-height:100%;
+	height:auto;
+	margin:0 auto -95px auto;
+	text-align:left
+	}
+* html #daddy {height:100%}
+
+/* Header */
+#header {height:332px}
+#logo {
+	width:366px;
+	height:85px;
+	padding:14px 0 0 0;
+	background:url('images/bg_menu_starter.gif') no-repeat top right;
+	float:left;
+	display:inline;
+	position:relative
+	}
+#logo-text {color:#ccc; font:normal 27px arial,serif; position:absolute; top:40px; left:100px}
+#ticker {width:632px; height:31px; float:right; display:inline; padding:15px 0 0 0; text-align:center; color:#888}
+#ticker:after {content:"."; display:block; height:0; clear:both; visibility:hidden}
+#headerimage {width:998px; height:233px; background:url('images/bg_header.jpg') no-repeat top left; float:left; position:relative}
+#slogan {color:#000; font:normal 20px arial,serif; position:absolute; bottom:35px; left:320px}
+#download {width:189px; height:59px; margin:128px 0 0 0; background:url('images/download.gif') no-repeat top left; float:left}
+#download-text {color:#fff; font:bold 15px/22px arial,serif; width:187px; display:block; text-align:center; padding:8px 2px 0 0}
+#icons {width:97px; height:90px; background:url('images/bg_icon_lines.gif') no-repeat top right; margin:126px 0 0 0; float:right}
+#home {width:13px; height:13px; margin:30px 7px 0 0; float:right}
+#sitemap {width:13px; height:13px; margin:52px 7px 0 0; float:right}
+#contact {width:13px; height:13px; margin:76px 7px 0 0; float:right}
+/* Header links */
+#logo a {font-weight:normal}
+#download a {color:#fff; display:block; height:51px}
+#download a:hover, #logo a:hover {text-decoration:none; color:#ddd}
+
+/* Menu */
+#menu {
+	width:632px;
+	height:53px;
+	background:url('images/bg_menu.gif') repeat-x top left;
+	float:right;
+	display:inline
+	}
+#menu ul {padding:20px 0 20px 17px; margin:0}
+#menu li {display:inline; list-style:none; margin:0 16px 0 0; font:bold 13px verdana,serif}
+#menu ul li a:link, #menu ul li a:visited {padding:5px 7px; color:#000; border:1px solid #ead28b; background:#fff}
+#menu ul li a:hover, #menu ul li.current_page_item a, #menu ul li a:active {color:#fff; border:1px solid #fff; background:#000; text-decoration:none}
+
+/* CONTENT AND COLUMNS */
+#content {background:#f3f2f0 url('images/bg_page.gif') repeat-y top left}
+#content a:link, #content a:visited {text-decoration:none; color:#1c4851; font-weight:bold}
+#cA {float:left; width:270px; margin:0 11px 0 30px; display:inline}
+.Ctopleft {background:url('images/corners_top.gif') no-repeat top left; width:9px; height:9px; overflow:hidden; float:left}
+#search {background:#a4c0ba; padding:10px 15px}
+#cA img {padding:4px; border:1px solid #d3cfce; margin:4px 7px 0 0}
+.testimonial {padding:10px; font:normal 10px arial,sans-serif}
+#cB {float:right; width:679px; margin:0 8px 0 0; display:inline}
+.Ctopright {background:url('images/corners_top.gif') no-repeat top right; width:9px; height:9px; overflow:hidden; float:right}
+#cB1 {width:340px; float:left; padding:0 10px 5px 10px}
+.postdate {padding:0 0 0 15px}
+.news {border-bottom:1px solid #e6e1dd; border-top:1px solid #fcfafb; padding:10px 15px 5px 15px}
+#cB2 {width:309px; float:right; margin:0}
+.about {background:#c6d6d6; border:1px solid #a4c0ba; padding:5px; margin:0 0 10px 0; color:#282627}
+.about ul {list-style-type:none}
+.about li {padding:0 0 0 20px; margin:5px 0; background:url('images/check.gif') no-repeat 0 50%}
+#newsletter {
+	width:309px;
+	height:86px;
+	background:url('images/newsletter.jpg') no-repeat top left;
+	position:relative;
+	text-transform:uppercase
+	}
+#newsletter-title {color:#fff; font:normal 24px impact,serif; position:absolute; top:10px; left:15px}
+#newsletter-title a {color:#fff!important; font-weight:normal!important}
+#newsletter-text {font:normal 10px arial,serif; position:absolute; bottom:10px; left:10px; width:209px}
+#newsletter-text a {color:#35393f!important}
+.Cpad {margin:0 8px 0 30px}
+.Cbottomleft {background:url('images/corners_bottom.gif') no-repeat top left; width:9px; height:9px; overflow:hidden; float:left; display:inline}
+.Cbottom {
+	width:942px;
+	height:9px;
+	overflow:hidden;
+	display:inline;
+	float:left;
+	background:url('images/bg_page.gif') repeat-y -39px 0
+	}
+.Cbottomright {background:url('images/corners_bottom.gif') no-repeat top right; width:9px; height:9px; overflow:hidden; float:right; display:inline}
+
+/* Footer */
+#footer {height:95px; width:100%; margin:0; background:url('images/bg_footer.gif') no-repeat bottom center}
+#foot {height:95px; width:998px; margin:0 auto; text-align:left}
+#foot1 {height:30px; text-align:right; padding:12px 29px 0 0}
+#foot1 a:link, #foot1 a:visited {color:#888}
+#foot1 a:active {color:#999}
+#foot2 {padding:10px 360px 0 30px; color:#999}
+#foot2 a:link, #foot2 a:visited {color:#ddd}
+#foot2 a:active {color:#eee}
+.star {color:#fc0}
+.valid {float:right}
+
+/* Misc */
+.clear {clear:both}
+.leflo {float:left}
+.riflo {float:right}
+#properspace {height:105px}
+#preloader {display:none}
