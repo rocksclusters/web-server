@@ -8,6 +8,9 @@ WordPress configuration
 
 <changelog>
 $Log: wordpress.xml,v $
+Revision 1.22  2008/08/27 22:06:20  bruno
+don't overwrite the footer
+
 Revision 1.21  2008/08/27 18:42:14  bruno
 tweaks
 
@@ -511,22 +514,6 @@ rm -f /tmp/*sql
 </post>
 
 <post>
-<!-- dynamically create a footer that has a secure link to admin the site -->
-
-<file name="/var/www/html/wordpress/wp-content/themes/rocks/footer.php">
-&lt;table class="credit"&gt;
-&lt;tr&gt;
-&lt;td align="center"&gt;
-&lt;a href="https://<var name="Kickstart_PublicHostname"/>/wordpress/wp-admin/"&gt;Add content to this web site&lt;a&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;div&gt;
-
-&lt;php do_action('wp_footer'); ?&gt;
-&lt;body&gt;
-&lt;html&gt;
-</file>
 
 <file name="/etc/httpd/conf.d/rocks-wordpress.conf">
 &lt;Directory /var/www/html/wordpress/wp-admin&gt;
