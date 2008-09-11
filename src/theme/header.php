@@ -26,7 +26,7 @@ global $page_sort;
 <div id="daddy">
 	<div id="header">
 
-		<div id="logo"><a href="<?php echo get_option('home'); ?>"><img src="<?php bloginfo('stylesheet_directory'); ?>/images/logo.gif" alt="<?php bloginfo('name'); ?>" width="318" height="85" /></a><span id="logo-text"><a href="<?php echo get_option('home'); ?>"><?php bloginfo('name'); ?></a></span></div><!-- logo -->
+		<div id="logo"><a href="<?php echo get_option('home'); ?>"><img src="<?php bloginfo('stylesheet_directory'); ?>/images/logo.png" alt="<?php bloginfo('name'); ?>" width="318" height="85" /></a><span id="logo-text"><a href="<?php echo get_option('home'); ?>"><?php bloginfo('name'); ?></a></span></div><!-- logo -->
 
 		<div id="menu">
 

@@ -30,7 +30,7 @@
 
 			</div><!-- cB1 -->
 			<div id="cB2">
-				<div id="newsletter">
+				<div id="monitor">
 					<span id="newsletter-title">Monitor</span>
 					<p id="newsletter-text">Click here to monitor your cluster</p>
 				</div><!-- newsletter -->
