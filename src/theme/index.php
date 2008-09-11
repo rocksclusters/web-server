@@ -30,15 +30,6 @@
 
 			</div><!-- cB1 -->
 			<div id="cB2">
-<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('sidebar2') ) : ?>
-				<h3>Recent Posts</h3>
-				<div class="about">
-					<ul>
-						<?php wp_get_archives('type=postbypost&limit=10'); ?>
-					</ul>
-				</div>
-<?php endif; ?>
-
 				<div id="newsletter">
 					<span id="newsletter-title">Monitor</span>
 					<p id="newsletter-text">Click here to monitor your cluster</p>
@@ -48,6 +39,15 @@
 					<span id="newsletter-title">Users Guide</span>
 					<p id="newsletter-text">Learn about your cluster</p>
 				</div><!-- newsletter -->
+
+<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('sidebar2') ) : ?>
+				<h3>Recent Posts</h3>
+				<div class="about">
+					<ul>
+						<?php wp_get_archives('type=postbypost&limit=10'); ?>
+					</ul>
+				</div>
+<?php endif; ?>
 			</div><!-- cB2 -->
 		</div><!-- cB -->
 <?php get_footer(); ?>
