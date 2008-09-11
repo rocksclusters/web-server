@@ -30,23 +30,20 @@
 
 			</div><!-- cB1 -->
 			<div id="cB2">
-				<div id="monitor">
-					<span id="newsletter-title">Monitor</span>
-					<p id="newsletter-text">Click here to monitor your cluster</p>
-				</div><!-- newsletter -->
 
-				<div id="newsletter">
-					<span id="newsletter-title">Users Guide</span>
-					<p id="newsletter-text">Learn about your cluster</p>
-				</div><!-- newsletter -->
+<?php wp_list_bookmarks(array(
+	'categorize' => 0,
+	'title_li' => '',
+	'class' => 'newsletter',
+	'before' => '<div id="newsletter"><span id="newsletter-title">',
+	'after' => '</p></span></div>',
+	'show_description' => 1,
+	'between' => '</span><p id="newsletter-text">',
+	'show_images' => 0,
+)); ?>
 
 <?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('sidebar2') ) : ?>
-				<h3>Recent Posts</h3>
-				<div class="about">
-					<ul>
-						<?php wp_get_archives('type=postbypost&limit=10'); ?>
-					</ul>
-				</div>
+
 <?php endif; ?>
 			</div><!-- cB2 -->
 		</div><!-- cB -->

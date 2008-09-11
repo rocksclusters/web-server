@@ -9,15 +9,24 @@
 			<p>&nbsp;</p>
 <?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar() ) : ?>
 
+<!--
 <h3>Cluster Links</h3>
 <ul>
 	<?php wp_list_bookmarks('categorize=0&title_li='); ?>
 </ul>
+-->
 
 <h3>Archives</h3>
 <ul>
 	<?php wp_get_archives('title_li='); ?>
 </ul>
+
+<h3>Recent Posts</h3>
+<div class="about">
+	<ul>
+		<?php wp_get_archives('type=postbypost&limit=10'); ?>
+	</ul>
+</div>
 
 <h3>Meta</h3>
 <ul>
