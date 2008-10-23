@@ -8,6 +8,9 @@ WordPress configuration
 
 <changelog>
 $Log: wordpress.xml,v $
+Revision 1.23  2008/10/23 21:04:21  bruno
+set the blogname to the name of the frontend
+
 Revision 1.22  2008/08/27 22:06:20  bruno
 don't overwrite the footer
 
@@ -237,7 +240,7 @@ LOCK TABLES `wp_options` WRITE;
 /*!40000 ALTER TABLE `wp_options` DISABLE KEYS */;
 INSERT INTO `wp_options` VALUES
 (1,0,'siteurl','','yes'),
-(2,0,'blogname','vi-1','yes'),
+(2,0,'blogname','','yes'),
 (3,0,'blogdescription','','yes'),
 (4,0,'users_can_register','0','yes'),
 (5,0,'admin_email','','yes'),

@@ -8,6 +8,9 @@ WordPress data
 
 <changelog>
 $Log: wordpress-data.xml,v $
+Revision 1.16  2008/10/23 21:04:21  bruno
+set the blogname to the name of the frontend
+
 Revision 1.15  2008/08/27 18:42:14  bruno
 tweaks
 
@@ -67,6 +70,10 @@ touch ups
 update wp_options set
 	option_value='http://<var name="Kickstart_PublicHostname"/>/wordpress'
 	where option_name='siteurl';	
+
+update into wp_options set
+	option_value='<var name="Kickstart_PrivateHostname"/>'
+	where option_name='blogname';
 
 insert into wp_users values (2, 'admin',
 	'<var name="Kickstart_PrivatePortableRootPassword"/>', 'admin',
