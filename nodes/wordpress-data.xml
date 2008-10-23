@@ -8,6 +8,9 @@ WordPress data
 
 <changelog>
 $Log: wordpress-data.xml,v $
+Revision 1.17  2008/10/23 22:08:44  bruno
+add descriptions to the links
+
 Revision 1.16  2008/10/23 21:04:21  bruno
 set the blogname to the name of the frontend
 
@@ -84,19 +87,19 @@ insert into wp_terms values
 
 <!-- put in the initial links -->
 
-insert into wp_links (link_name, link_url, link_category)
-	values ('Users Guide',
+insert into wp_links (link_name, link_description, link_url, link_category)
+	values ('Users Guide', 'Info about Rocks Clusters',
 	'/roll-documentation/base/<var name="Info_RocksVersion"/>/',
 	1);
 
-insert into wp_links (link_name, link_url, link_category)
-	values ('Roll Docs',
+insert into wp_links (link_name, link_description, link_url, link_category)
+	values ('Roll Docs', 'Documentation for the installed rolls',
 	'/roll-documentation/',
 	1);
 
-insert into wp_links (link_name, link_url, link_category)
-	values ('Support',
-	'https://lists.sdsc.edu/mailman/listinfo.cgi/npaci-rocks-discussion',
+insert into wp_links (link_name, link_description, link_url, link_category)
+	values ('Support', 'Get help at the Rocks Web Site',
+	'http://support.rocksclusters.org', 
 	1);
 
 <!-- put in the initial posts -->
