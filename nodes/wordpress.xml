@@ -8,6 +8,9 @@ WordPress configuration
 
 <changelog>
 $Log: wordpress.xml,v $
+Revision 1.24  2008/10/24 20:24:09  bruno
+force the admin user to login via HTTPS
+
 Revision 1.23  2008/10/23 21:04:21  bruno
 set the blogname to the name of the frontend
 
@@ -110,6 +113,9 @@ $table_prefix  = 'wp_';   // example: 'wp_' or 'b2' or 'mylogin_'
 // For example, install de.mo to wp-includes/languages and set WPLANG to 'de'
 // to enable German language support.
 define ('WPLANG', '');
+
+define('FORCE_SSL_ADMIN', true);
+define('FORCE_SSL_LOGIN', true);
 
 /* Stop editing */
 
