@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.10 2008/10/18 00:56:22 mjk Exp $
+# $Id: Makefile,v 1.11 2008/10/31 16:34:57 bruno Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,9 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.11  2008/10/31 16:34:57  bruno
+# convert more rolls to use new development environment
+#
 # Revision 1.10  2008/10/18 00:56:22  mjk
 # copyright 5.1
 #
@@ -102,8 +105,6 @@
 #
 #
 
-
-ROLLSROOT = ..
 -include $(ROLLSROOT)/etc/Rolls.mk
 include Rolls.mk
 
