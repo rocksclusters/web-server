@@ -8,6 +8,9 @@ WordPress data
 
 <changelog>
 $Log: wordpress-data.xml,v $
+Revision 1.19  2009/01/23 21:20:54  bruno
+var tags have been replaced by entities
+
 Revision 1.18  2008/10/24 19:51:08  bruno
 fix syntax error
 
@@ -74,16 +77,16 @@ touch ups
 <file name="/tmp/rocks-wp.sql">
 
 update wp_options set
-	option_value='http://<var name="Kickstart_PublicHostname"/>/wordpress'
+	option_value='http://&Kickstart_PublicHostname;/wordpress'
 	where option_name='siteurl';	
 
 update wp_options set
-	option_value='<var name="Kickstart_PrivateHostname"/>'
+	option_value='&Kickstart_PrivateHostname;'
 	where option_name='blogname';
 
 insert into wp_users values (2, 'admin',
-	'<var name="Kickstart_PrivatePortableRootPassword"/>', 'admin',
-	'<var name="Info_ClusterContact"/>', '', NOW(), '', 0, 'admin');
+	'&Kickstart_PrivatePortableRootPassword;', 'admin',
+	'&Info_ClusterContact;', '', NOW(), '', 0, 'admin');
 
 insert into wp_terms values
 	(1, 'Cluster Links', 'clusterlink', 0);
@@ -92,7 +95,7 @@ insert into wp_terms values
 
 insert into wp_links (link_name, link_description, link_url, link_category)
 	values ('Users Guide', 'Info about Rocks Clusters',
-	'/roll-documentation/base/<var name="Info_RocksVersion"/>/',
+	'/roll-documentation/base/&Info_RocksVersion;/',
 	1);
 
 insert into wp_links (link_name, link_description, link_url, link_category)
@@ -119,7 +122,7 @@ insert into wp_posts (
 		post_modified_gmt
 	)
 	values(
-		'<var name="Info_ClusterName"/> is installed.',
+		'&Info_ClusterName; is installed.',
 'Click on the links above to monitor your cluster and to learn more about how to use it.
 
 In addition, you can optionally &lt;a href="http://www.rocksclusters.org/rocks-register/insert.php"&gt;register this cluster&lt;/a&gt;. The National Science Foundation is our primary funding vehicle. While we have several measurements of Rocks usage (downloads, number of list subscribers, number of posts), the registry gives our funding agency an additional and significant device for evaluation. It also lets us know which platforms are the most important to Rocks users and what sizes of clusters our software must support.
@@ -165,7 +168,7 @@ insert into wp_posts (
 
 
 &lt;h3&gt; Database Administration &lt;/h3&gt;
-&lt;p&gt;Click &lt;a href="https://<var name="Kickstart_PublicHostname"/>/admin/phpMyAdmin/"&gt;here&lt;/a&gt; to administer the Rocks MySQL database via the web.&lt;/p&gt;
+&lt;p&gt;Click &lt;a href="https://&Kickstart_PublicHostname;/admin/phpMyAdmin/"&gt;here&lt;/a&gt; to administer the Rocks MySQL database via the web.&lt;/p&gt;
 &lt;h3&gt;Label Creation&lt;/h3&gt;
 &lt;p&gt;Click &lt;a href="/labels/index.cgi"&gt;here&lt;/a&gt; to download a PDF file that contains a sheet (or sheets) of labels for every node in your cluster.&lt;br&gt;The output conforms to Avery\'s address labels sheet "Laser 5260".&lt;/p&gt;',
 		'',
