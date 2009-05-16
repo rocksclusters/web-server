@@ -8,6 +8,17 @@ WordPress configuration
 
 <changelog>
 $Log: wordpress.xml,v $
+Revision 1.25  2009/05/16 02:10:51  anoop
+Moved from RedHat MySQL to Rocks foundation-mysql
+rather forcefully.
+
+Turned off RedHat MySQL and cleanup of node xml files
+to remove all access to RedHat MySQL.
+
+Wordpress data and generic php mysql accesses are now
+directed to foundation-mysql. Here's hoping we got all
+of it.
+
 Revision 1.24  2008/10/24 20:24:09  bruno
 force the admin user to login via HTTPS
 
@@ -103,7 +114,8 @@ mkdir -p /var/www/html/wordpress
 define('DB_NAME', 'wordpress');     // The name of the database
 define('DB_USER', 'wordpress');     // Your MySQL username
 define('DB_PASSWORD', ''); // ...and password
-define('DB_HOST', 'localhost');     // 99% chance you won't need to change this value
+// 99% chance you won't need to change this value
+define('DB_HOST', 'localhost:/var/opt/rocks/mysql/mysql.sock');
 
 // Change the prefix if you want to have multiple blogs in a single database.
 $table_prefix  = 'wp_';   // example: 'wp_' or 'b2' or 'mylogin_'
@@ -147,7 +159,7 @@ create database wordpress;
 grant all privileges on wordpress.* to "wordpress"@"localhost" identified by "";
 </file>
 
-/usr/bin/mysql &lt; /tmp/wordpress-perms.sql
+/opt/rocks/bin/mysql --user=root --password='' mysql &lt; /tmp/wordpress-perms.sql
 
 
 <!-- lay down the initial data -->
@@ -506,7 +518,7 @@ CREATE TABLE `wp_users` (
 ]]>
 </file>
 
-/usr/bin/mysql -u wordpress wordpress &lt; /tmp/wordpress-data.sql
+/opt/rocks/bin/mysql -u wordpress wordpress &lt; /tmp/wordpress-data.sql
 
 
 rm -f /tmp/*sql
@@ -540,4 +552,3 @@ rm -f /tmp/*sql
 </post>
 
 </kickstart>
-

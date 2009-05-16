@@ -8,6 +8,17 @@ WordPress data
 
 <changelog>
 $Log: wordpress-data.xml,v $
+Revision 1.20  2009/05/16 02:10:51  anoop
+Moved from RedHat MySQL to Rocks foundation-mysql
+rather forcefully.
+
+Turned off RedHat MySQL and cleanup of node xml files
+to remove all access to RedHat MySQL.
+
+Wordpress data and generic php mysql accesses are now
+directed to foundation-mysql. Here's hoping we got all
+of it.
+
 Revision 1.19  2009/01/23 21:20:54  bruno
 var tags have been replaced by entities
 
@@ -184,7 +195,7 @@ insert into wp_posts (
 
 </file>
 
-cat /tmp/rocks-wp.sql | mysql -u wordpress wordpress
+/opt/rocks/bin/mysql -u wordpress wordpress &lt; /tmp/rocks-wp.sql
 </post>
 
 </kickstart>
