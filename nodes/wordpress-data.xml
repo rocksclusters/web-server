@@ -8,6 +8,11 @@ WordPress data
 
 <changelog>
 $Log: wordpress-data.xml,v $
+Revision 1.21  2009/06/11 02:34:00  anoop
+- Remove outdated data
+- populate database so that misc-admin
+  actually shows up in the cluster home page
+
 Revision 1.20  2009/05/16 02:10:51  anoop
 Moved from RedHat MySQL to Rocks foundation-mysql
 rather forcefully.
@@ -141,7 +146,7 @@ In addition, you can optionally &lt;a href="http://www.rocksclusters.org/rocks-r
 To add more content to this site, click on the link below that is labeled: "Add content to this web site".',
 		'',
 		'installed',
-		1,
+		(select wp_users.id from wp_users where wp_users.user_login="admin"),
 		now(),
 		utc_timestamp(),
 		now(),
@@ -158,7 +163,8 @@ insert into wp_posts (
 		post_date,
 		post_date_gmt, 
 		post_modified,
-		post_modified_gmt
+		post_modified_gmt,
+		post_type
 	)
 	values(
 		'Misc Admin',
@@ -175,24 +181,18 @@ insert into wp_posts (
 &lt;li&gt; &lt;a href="/misc/dot-graph.php?size=65,65"&gt;small&lt;/a&gt; &lt;/li&gt;
 &lt;li&gt; &lt;a href="/misc/dot-graph.php?size=75,75"&gt;medium&lt;/a&gt; &lt;/li&gt;
 &lt;li&gt; &lt;a href="/misc/dot-graph.php?size=85,85"&gt;large&lt;/a&gt; &lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;h3&gt; Database Administration &lt;/h3&gt;
-&lt;p&gt;Click &lt;a href="https://&Kickstart_PublicHostname;/admin/phpMyAdmin/"&gt;here&lt;/a&gt; to administer the Rocks MySQL database via the web.&lt;/p&gt;
-&lt;h3&gt;Label Creation&lt;/h3&gt;
-&lt;p&gt;Click &lt;a href="/labels/index.cgi"&gt;here&lt;/a&gt; to download a PDF file that contains a sheet (or sheets) of labels for every node in your cluster.&lt;br&gt;The output conforms to Avery\'s address labels sheet "Laser 5260".&lt;/p&gt;',
+&lt;/ul&gt;',
 		'',
-		'static',
+		'publish',
 		'misc-admin',
-		1,
+		(select wp_users.id from wp_users where wp_users.user_login="admin"),
                 now(),
                 utc_timestamp(),
                 now(),
-                utc_timestamp()
+                utc_timestamp(),
+		'page'
 	);
 		
-
 </file>
 
 /opt/rocks/bin/mysql -u wordpress wordpress &lt; /tmp/rocks-wp.sql
