@@ -43,12 +43,6 @@ global $page_sort;
 
 		<div id="headerimage">
 			<div id="download"><span id="download-text">Rocks</span></div>
-<!--
-			<div id="icons">
-				<a href="<?php echo get_option('home'); ?>" ><img src="<?php bloginfo('stylesheet_directory'); ?>/images/icon_home.gif" alt="Home" width="13" height="13" id="home" /></a>
-				<a href="#"><img src="<?php bloginfo('stylesheet_directory'); ?>/images/icon_sitemap.gif" alt="Sitemap" width="13" height="13" id="sitemap" /></a>
-				<a href="#"><img src="<?php bloginfo('stylesheet_directory'); ?>/images/icon_contact.gif" alt="Contact" width="13" height="13" id="contact" /></a>			</div><!-- icons -->
--->
 
 			<div id="slogan"><?php bloginfo('description'); ?></div>
 		</div>
