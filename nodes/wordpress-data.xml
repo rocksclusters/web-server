@@ -8,6 +8,9 @@ WordPress data
 
 <changelog>
 $Log: wordpress-data.xml,v $
+Revision 1.23  2009/10/16 17:57:54  bruno
+the one and true view of the graph
+
 Revision 1.22  2009/10/16 17:54:00  bruno
 Info_RocksVersion no longer exists
 
@@ -172,18 +175,10 @@ insert into wp_posts (
 	values(
 		'Misc Admin',
 		'&lt;h3&gt; Kickstart Graph &lt;/h3&gt;
-&lt;p&gt;Landscape&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt; &lt;a href="/misc/dot-graph.php?size=40,40&amp;landscape=1"&gt;small&lt;/a&gt; &lt;/li&gt;
-&lt;li&gt; &lt;a href="/misc/dot-graph.php?size=50,50&amp;landscape=1"&gt;medium&lt;/a&gt; &lt;/li&gt;
-&lt;li&gt; &lt;a href="/misc/dot-graph.php?landscape=1"&gt;large&lt;/a&gt; &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Portrait&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt; &lt;a href="/misc/dot-graph.php?size=65,65"&gt;small&lt;/a&gt; &lt;/li&gt;
-&lt;li&gt; &lt;a href="/misc/dot-graph.php?size=75,75"&gt;medium&lt;/a&gt; &lt;/li&gt;
 &lt;li&gt; &lt;a href="/misc/dot-graph.php?size=85,85"&gt;large&lt;/a&gt; &lt;/li&gt;
+&lt;li&gt; &lt;a href="/misc/dot-graph.php?size=75,75"&gt;medium&lt;/a&gt; &lt;/li&gt;
+&lt;li&gt; &lt;a href="/misc/dot-graph.php?size=65,65"&gt;small&lt;/a&gt; &lt;/li&gt;
 &lt;/ul&gt;',
 		'',
 		'publish',
