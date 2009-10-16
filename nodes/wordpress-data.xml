@@ -8,6 +8,9 @@ WordPress data
 
 <changelog>
 $Log: wordpress-data.xml,v $
+Revision 1.22  2009/10/16 17:54:00  bruno
+Info_RocksVersion no longer exists
+
 Revision 1.21  2009/06/11 02:34:00  anoop
 - Remove outdated data
 - populate database so that misc-admin
@@ -111,7 +114,7 @@ insert into wp_terms values
 
 insert into wp_links (link_name, link_description, link_url, link_category)
 	values ('Users Guide', 'Info about Rocks Clusters',
-	'/roll-documentation/base/&Info_RocksVersion;/',
+	'/roll-documentation/base/&version;/',
 	1);
 
 insert into wp_links (link_name, link_description, link_url, link_category)
