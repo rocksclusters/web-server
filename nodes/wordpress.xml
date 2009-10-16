@@ -8,6 +8,9 @@ WordPress configuration
 
 <changelog>
 $Log: wordpress.xml,v $
+Revision 1.26  2009/10/16 18:42:16  bruno
+update database for new version of wordpress
+
 Revision 1.25  2009/05/16 02:10:51  anoop
 Moved from RedHat MySQL to Rocks foundation-mysql
 rather forcefully.
@@ -165,12 +168,6 @@ grant all privileges on wordpress.* to "wordpress"@"localhost" identified by "";
 <!-- lay down the initial data -->
 <file name="/tmp/wordpress-data.sql" perms="0400">
 <![CDATA[
--- MySQL dump 10.11
---
--- Host: localhost    Database: wordpress
--- ------------------------------------------------------
--- Server version	5.0.45
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -187,68 +184,77 @@ grant all privileges on wordpress.* to "wordpress"@"localhost" identified by "";
 --
 
 DROP TABLE IF EXISTS `wp_comments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wp_comments` (
-  `comment_ID` bigint(20) unsigned NOT NULL auto_increment,
-  `comment_post_ID` int(11) NOT NULL default '0',
+  `comment_ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `comment_post_ID` bigint(20) unsigned NOT NULL DEFAULT '0',
   `comment_author` tinytext NOT NULL,
-  `comment_author_email` varchar(100) NOT NULL default '',
-  `comment_author_url` varchar(200) NOT NULL default '',
-  `comment_author_IP` varchar(100) NOT NULL default '',
-  `comment_date` datetime NOT NULL default '0000-00-00 00:00:00',
-  `comment_date_gmt` datetime NOT NULL default '0000-00-00 00:00:00',
+  `comment_author_email` varchar(100) NOT NULL DEFAULT '',
+  `comment_author_url` varchar(200) NOT NULL DEFAULT '',
+  `comment_author_IP` varchar(100) NOT NULL DEFAULT '',
+  `comment_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `comment_date_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `comment_content` text NOT NULL,
-  `comment_karma` int(11) NOT NULL default '0',
-  `comment_approved` varchar(20) NOT NULL default '1',
-  `comment_agent` varchar(255) NOT NULL default '',
-  `comment_type` varchar(20) NOT NULL default '',
-  `comment_parent` bigint(20) NOT NULL default '0',
-  `user_id` bigint(20) NOT NULL default '0',
-  PRIMARY KEY  (`comment_ID`),
+  `comment_karma` int(11) NOT NULL DEFAULT '0',
+  `comment_approved` varchar(20) NOT NULL DEFAULT '1',
+  `comment_agent` varchar(255) NOT NULL DEFAULT '',
+  `comment_type` varchar(20) NOT NULL DEFAULT '',
+  `comment_parent` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `user_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`comment_ID`),
   KEY `comment_approved` (`comment_approved`),
   KEY `comment_post_ID` (`comment_post_ID`),
   KEY `comment_approved_date_gmt` (`comment_approved`,`comment_date_gmt`),
   KEY `comment_date_gmt` (`comment_date_gmt`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `wp_links`
 --
 
 DROP TABLE IF EXISTS `wp_links`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wp_links` (
-  `link_id` bigint(20) NOT NULL auto_increment,
-  `link_url` varchar(255) NOT NULL default '',
-  `link_name` varchar(255) NOT NULL default '',
-  `link_image` varchar(255) NOT NULL default '',
-  `link_target` varchar(25) NOT NULL default '',
-  `link_category` bigint(20) NOT NULL default '0',
-  `link_description` varchar(255) NOT NULL default '',
-  `link_visible` varchar(20) NOT NULL default 'Y',
-  `link_owner` int(11) NOT NULL default '1',
-  `link_rating` int(11) NOT NULL default '0',
-  `link_updated` datetime NOT NULL default '0000-00-00 00:00:00',
-  `link_rel` varchar(255) NOT NULL default '',
+  `link_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `link_url` varchar(255) NOT NULL DEFAULT '',
+  `link_name` varchar(255) NOT NULL DEFAULT '',
+  `link_image` varchar(255) NOT NULL DEFAULT '',
+  `link_target` varchar(25) NOT NULL DEFAULT '',
+  `link_category` bigint(20) NOT NULL DEFAULT '0',
+  `link_description` varchar(255) NOT NULL DEFAULT '',
+  `link_visible` varchar(20) NOT NULL DEFAULT 'Y',
+  `link_owner` bigint(20) unsigned NOT NULL DEFAULT '1',
+  `link_rating` int(11) NOT NULL DEFAULT '0',
+  `link_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `link_rel` varchar(255) NOT NULL DEFAULT '',
   `link_notes` mediumtext NOT NULL,
-  `link_rss` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`link_id`),
+  `link_rss` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`link_id`),
   KEY `link_category` (`link_category`),
   KEY `link_visible` (`link_visible`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `wp_options`
 --
 
 DROP TABLE IF EXISTS `wp_options`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wp_options` (
-  `option_id` bigint(20) NOT NULL auto_increment,
-  `blog_id` int(11) NOT NULL default '0',
-  `option_name` varchar(64) NOT NULL default '',
+  `option_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `blog_id` int(11) NOT NULL DEFAULT '0',
+  `option_name` varchar(64) NOT NULL DEFAULT '',
   `option_value` longtext NOT NULL,
-  `autoload` varchar(20) NOT NULL default 'yes',
-  PRIMARY KEY  (`option_id`,`blog_id`,`option_name`),
+  `autoload` varchar(20) NOT NULL DEFAULT 'yes',
+  PRIMARY KEY (`option_id`,`blog_id`,`option_name`),
   KEY `option_name` (`option_name`)
-) ENGINE=MyISAM AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=166 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `wp_options`
@@ -307,14 +313,13 @@ INSERT INTO `wp_options` VALUES
 (48,0,'template','default','yes'),
 (49,0,'stylesheet','default','yes'),
 (50,0,'comment_whitelist','1','yes'),
-(51,0,'page_uris','','yes'),
 (52,0,'blacklist_keys','','no'),
 (53,0,'comment_registration','0','yes'),
 (54,0,'rss_language','en','yes'),
 (55,0,'html_type','text/html','yes'),
 (56,0,'use_trackback','0','yes'),
 (57,0,'default_role','subscriber','yes'),
-(58,0,'db_version','8204','yes'),
+(58,0,'db_version','11548','yes'),
 (59,0,'uploads_use_yearmonth_folders','1','yes'),
 (60,0,'upload_path','/var/www/html/wordpress/wp-content/uploads','yes'),
 (62,0,'blog_public','1','yes'),
@@ -332,17 +337,43 @@ INSERT INTO `wp_options` VALUES
 (74,0,'avatar_default','mystery','yes'),
 (75,0,'enable_app','0','yes'),
 (76,0,'enable_xmlrpc','0','yes'),
-(77,0,'wp_user_roles','a:5:{s:13:\"administrator\";a:2:{s:4:\"name\";s:23:\"Administrator|User role\";s:12:\"capabilities\";a:51:{s:13:\"switch_themes\";b:1;s:11:\"edit_themes\";b:1;s:16:\"activate_plugins\";b:1;s:12:\"edit_plugins\";b:1;s:10:\"edit_users\";b:1;s:10:\"edit_files\";b:1;s:14:\"manage_options\";b:1;s:17:\"moderate_comments\";b:1;s:17:\"manage_categories\";b:1;s:12:\"manage_links\";b:1;s:12:\"upload_files\";b:1;s:6:\"import\";b:1;s:15:\"unfiltered_html\";b:1;s:10:\"edit_posts\";b:1;s:17:\"edit_others_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:10:\"edit_pages\";b:1;s:4:\"read\";b:1;s:8:\"level_10\";b:1;s:7:\"level_9\";b:1;s:7:\"level_8\";b:1;s:7:\"level_7\";b:1;s:7:\"level_6\";b:1;s:7:\"level_5\";b:1;s:7:\"level_4\";b:1;s:7:\"level_3\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:17:\"edit_others_pages\";b:1;s:20:\"edit_published_pages\";b:1;s:13:\"publish_pages\";b:1;s:12:\"delete_pages\";b:1;s:19:\"delete_others_pages\";b:1;s:22:\"delete_published_pages\";b:1;s:12:\"delete_posts\";b:1;s:19:\"delete_others_posts\";b:1;s:22:\"delete_published_posts\";b:1;s:20:\"delete_private_posts\";b:1;s:18:\"edit_private_posts\";b:1;s:18:\"read_private_posts\";b:1;s:20:\"delete_private_pages\";b:1;s:18:\"edit_private_pages\";b:1;s:18:\"read_private_pages\";b:1;s:12:\"delete_users\";b:1;s:12:\"create_users\";b:1;s:17:\"unfiltered_upload\";b:1;s:14:\"edit_dashboard\";b:1;s:14:\"update_plugins\";b:1;s:14:\"delete_plugins\";b:1;}}s:6:\"editor\";a:2:{s:4:\"name\";s:16:\"Editor|User role\";s:12:\"capabilities\";a:34:{s:17:\"moderate_comments\";b:1;s:17:\"manage_categories\";b:1;s:12:\"manage_links\";b:1;s:12:\"upload_files\";b:1;s:15:\"unfiltered_html\";b:1;s:10:\"edit_posts\";b:1;s:17:\"edit_others_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:10:\"edit_pages\";b:1;s:4:\"read\";b:1;s:7:\"level_7\";b:1;s:7:\"level_6\";b:1;s:7:\"level_5\";b:1;s:7:\"level_4\";b:1;s:7:\"level_3\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:17:\"edit_others_pages\";b:1;s:20:\"edit_published_pages\";b:1;s:13:\"publish_pages\";b:1;s:12:\"delete_pages\";b:1;s:19:\"delete_others_pages\";b:1;s:22:\"delete_published_pages\";b:1;s:12:\"delete_posts\";b:1;s:19:\"delete_others_posts\";b:1;s:22:\"delete_published_posts\";b:1;s:20:\"delete_private_posts\";b:1;s:18:\"edit_private_posts\";b:1;s:18:\"read_private_posts\";b:1;s:20:\"delete_private_pages\";b:1;s:18:\"edit_private_pages\";b:1;s:18:\"read_private_pages\";b:1;}}s:6:\"author\";a:2:{s:4:\"name\";s:16:\"Author|User role\";s:12:\"capabilities\";a:10:{s:12:\"upload_files\";b:1;s:10:\"edit_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:4:\"read\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:12:\"delete_posts\";b:1;s:22:\"delete_published_posts\";b:1;}}s:11:\"contributor\";a:2:{s:4:\"name\";s:21:\"Contributor|User role\";s:12:\"capabilities\";a:5:{s:10:\"edit_posts\";b:1;s:4:\"read\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:12:\"delete_posts\";b:1;}}s:10:\"subscriber\";a:2:{s:4:\"name\";s:20:\"Subscriber|User role\";s:12:\"capabilities\";a:2:{s:4:\"read\";b:1;s:7:\"level_0\";b:1;}}}','yes'),
-(78,0,'cron','a:2:{i:1219319842;a:1:{s:17:\"wp_update_plugins\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}}s:7:\"version\";i:2;}','yes'),
+(77,0,'wp_user_roles','a:5:{s:13:\"administrator\";a:2:{s:4:\"name\";s:23:\"Administrator|User role\";s:12:\"capabilities\";a:54:{s:13:\"switch_themes\";b:1;s:11:\"edit_themes\";b:1;s:16:\"activate_plugins\";b:1;s:12:\"edit_plugins\";b:1;s:10:\"edit_users\";b:1;s:10:\"edit_files\";b:1;s:14:\"manage_options\";b:1;s:17:\"moderate_comments\";b:1;s:17:\"manage_categories\";b:1;s:12:\"manage_links\";b:1;s:12:\"upload_files\";b:1;s:6:\"import\";b:1;s:15:\"unfiltered_html\";b:1;s:10:\"edit_posts\";b:1;s:17:\"edit_others_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:10:\"edit_pages\";b:1;s:4:\"read\";b:1;s:8:\"level_10\";b:1;s:7:\"level_9\";b:1;s:7:\"level_8\";b:1;s:7:\"level_7\";b:1;s:7:\"level_6\";b:1;s:7:\"level_5\";b:1;s:7:\"level_4\";b:1;s:7:\"level_3\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:17:\"edit_others_pages\";b:1;s:20:\"edit_published_pages\";b:1;s:13:\"publish_pages\";b:1;s:12:\"delete_pages\";b:1;s:19:\"delete_others_pages\";b:1;s:22:\"delete_published_pages\";b:1;s:12:\"delete_posts\";b:1;s:19:\"delete_others_posts\";b:1;s:22:\"delete_published_posts\";b:1;s:20:\"delete_private_posts\";b:1;s:18:\"edit_private_posts\";b:1;s:18:\"read_private_posts\";b:1;s:20:\"delete_private_pages\";b:1;s:18:\"edit_private_pages\";b:1;s:18:\"read_private_pages\";b:1;s:12:\"delete_users\";b:1;s:12:\"create_users\";b:1;s:17:\"unfiltered_upload\";b:1;s:14:\"edit_dashboard\";b:1;s:14:\"update_plugins\";b:1;s:14:\"delete_plugins\";b:1;s:15:\"install_plugins\";b:1;s:13:\"update_themes\";b:1;s:14:\"install_themes\";b:1;}}s:6:\"editor\";a:2:{s:4:\"name\";s:16:\"Editor|User role\";s:12:\"capabilities\";a:34:{s:17:\"moderate_comments\";b:1;s:17:\"manage_categories\";b:1;s:12:\"manage_links\";b:1;s:12:\"upload_files\";b:1;s:15:\"unfiltered_html\";b:1;s:10:\"edit_posts\";b:1;s:17:\"edit_others_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:10:\"edit_pages\";b:1;s:4:\"read\";b:1;s:7:\"level_7\";b:1;s:7:\"level_6\";b:1;s:7:\"level_5\";b:1;s:7:\"level_4\";b:1;s:7:\"level_3\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:17:\"edit_others_pages\";b:1;s:20:\"edit_published_pages\";b:1;s:13:\"publish_pages\";b:1;s:12:\"delete_pages\";b:1;s:19:\"delete_others_pages\";b:1;s:22:\"delete_published_pages\";b:1;s:12:\"delete_posts\";b:1;s:19:\"delete_others_posts\";b:1;s:22:\"delete_published_posts\";b:1;s:20:\"delete_private_posts\";b:1;s:18:\"edit_private_posts\";b:1;s:18:\"read_private_posts\";b:1;s:20:\"delete_private_pages\";b:1;s:18:\"edit_private_pages\";b:1;s:18:\"read_private_pages\";b:1;}}s:6:\"author\";a:2:{s:4:\"name\";s:16:\"Author|User role\";s:12:\"capabilities\";a:10:{s:12:\"upload_files\";b:1;s:10:\"edit_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:4:\"read\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:12:\"delete_posts\";b:1;s:22:\"delete_published_posts\";b:1;}}s:11:\"contributor\";a:2:{s:4:\"name\";s:21:\"Contributor|User role\";s:12:\"capabilities\";a:5:{s:10:\"edit_posts\";b:1;s:4:\"read\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:12:\"delete_posts\";b:1;}}s:10:\"subscriber\";a:2:{s:4:\"name\";s:20:\"Subscriber|User role\";s:12:\"capabilities\";a:2:{s:4:\"read\";b:1;s:7:\"level_0\";b:1;}}}','yes'),
+(78,0,'cron','a:3:{i:1255737442;a:1:{s:17:\"wp_update_plugins\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}}i:1255758775;a:2:{s:16:\"wp_version_check\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}s:16:\"wp_update_themes\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}}s:7:\"version\";i:2;}','yes'),
 (79,0,'auth_salt','4(zBVL$OVJK8','yes'),
-(80,0,'update_core','O:8:\"stdClass\":5:{s:12:\"last_checked\";i:1219276642;s:15:\"version_checked\";s:5:\"2.6.1\";s:8:\"response\";s:6:\"latest\";s:3:\"url\";s:30:\"http://wordpress.org/download/\";s:7:\"current\";s:5:\"2.6.1\";}','yes'),
-(81,0,'update_core','O:8:\"stdClass\":5:{s:12:\"last_checked\";i:1219276642;s:15:\"version_checked\";s:5:\"2.6.1\";s:8:\"response\";s:6:\"latest\";s:3:\"url\";s:30:\"http://wordpress.org/download/\";s:7:\"current\";s:5:\"2.6.1\";}','yes'),
-(82,0,'doing_cron','0','yes'),
-(83,0,'update_plugins','O:8:\"stdClass\":2:{s:12:\"last_checked\";i:1219276643;s:7:\"checked\";a:2:{s:19:\"akismet/akismet.php\";s:5:\"2.1.6\";s:9:\"hello.php\";s:3:\"1.5\";}}','yes'),
 (84,0,'logged_in_salt',')S8rx1J&#xl0','yes'),
-(85,0,'dashboard_widget_options','a:3:{s:24:\"dashboard_incoming_links\";a:5:{s:4:\"home\";s:26:\"http://localhost/wordpress\";s:4:\"link\";s:108:\"http://blogsearch.google.com/blogsearch?hl=en&scoring=d&partner=wordpress&q=link:http://localhost/wordpress/\";s:3:\"url\";s:141:\"http://blogsearch.google.com/blogsearch_feeds?hl=en&scoring=d&ie=utf-8&num=10&output=rss&partner=wordpress&q=link:http://localhost/wordpress/\";s:5:\"items\";i:5;s:9:\"show_date\";i:0;}s:17:\"dashboard_primary\";a:7:{s:4:\"link\";s:33:\"http://wordpress.org/development/\";s:3:\"url\";s:38:\"http://wordpress.org/development/feed/\";s:5:\"title\";s:26:\"WordPress Development Blog\";s:5:\"items\";i:2;s:12:\"show_summary\";i:1;s:11:\"show_author\";i:0;s:9:\"show_date\";i:1;}s:19:\"dashboard_secondary\";a:4:{s:4:\"link\";s:28:\"http://planet.wordpress.org/\";s:3:\"url\";s:33:\"http://planet.wordpress.org/feed/\";s:5:\"title\";s:20:\"Other WordPress News\";s:5:\"items\";i:15;}}','yes'),
+(85,0,'dashboard_widget_options','a:3:{s:24:\"dashboard_incoming_links\";a:5:{s:4:\"home\";s:47:\"http://localhost/wordpress\";s:4:\"link\";s:129:\"http://blogsearch.google.com/blogsearch?hl=en&scoring=d&partner=wordpress&q=link:http://localhost/wordpress/\";s:3:\"url\";s:141:\"http://blogsearch.google.com/blogsearch_feeds?hl=en&scoring=d&ie=utf-8&num=10&output=rss&partner=wordpress&q=link:http://localhost/wordpress/\";s:5:\"items\";i:5;s:9:\"show_date\";i:0;}s:17:\"dashboard_primary\";a:7:{s:4:\"link\";s:33:\"http://wordpress.org/development/\";s:3:\"url\";s:38:\"http://wordpress.org/development/feed/\";s:5:\"title\";s:26:\"WordPress Development Blog\";s:5:\"items\";i:2;s:12:\"show_summary\";i:1;s:11:\"show_author\";i:0;s:9:\"show_date\";i:1;}s:19:\"dashboard_secondary\";a:4:{s:4:\"link\";s:28:\"http://planet.wordpress.org/\";s:3:\"url\";s:33:\"http://planet.wordpress.org/feed/\";s:5:\"title\";s:20:\"Other WordPress News\";s:5:\"items\";i:15;}}','yes'),
 (86,0,'current_theme','WordPress Default','yes'),
-(87,0,'sidebars_widgets','a:1:{s:13:\"array_version\";i:3;}','yes');
+(87,0,'sidebars_widgets','a:1:{s:13:\"array_version\";i:3;}','yes'),
+(106,0,'secure_auth_salt','1K(j5^Y353iem(9Q77LMB%*dj)^ofI*@*jMsF2(tGDNLaG4Ww(d)6Cnb2Vt7iBdk','yes'),
+(107,0,'widget_pages','a:2:{i:2;a:0:{}s:12:\"_multiwidget\";i:1;}','yes'),
+(108,0,'widget_calendar','a:2:{i:2;a:0:{}s:12:\"_multiwidget\";i:1;}','yes'),
+(109,0,'widget_archives','a:2:{i:2;a:0:{}s:12:\"_multiwidget\";i:1;}','yes'),
+(110,0,'widget_links','a:2:{i:2;a:0:{}s:12:\"_multiwidget\";i:1;}','yes'),
+(111,0,'widget_meta','a:2:{i:2;a:0:{}s:12:\"_multiwidget\";i:1;}','yes'),
+(112,0,'widget_search','a:2:{i:2;a:0:{}s:12:\"_multiwidget\";i:1;}','yes'),
+(113,0,'widget_text','a:2:{i:2;a:0:{}s:12:\"_multiwidget\";i:1;}','yes'),
+(114,0,'widget_categories','a:2:{i:2;a:0:{}s:12:\"_multiwidget\";i:1;}','yes'),
+(115,0,'widget_recent-posts','a:2:{i:2;a:0:{}s:12:\"_multiwidget\";i:1;}','yes'),
+(116,0,'widget_recent-comments','a:2:{i:2;a:0:{}s:12:\"_multiwidget\";i:1;}','yes'),
+(117,0,'widget_rss','a:2:{i:2;a:0:{}s:12:\"_multiwidget\";i:1;}','yes'),
+(118,0,'widget_tag_cloud','a:2:{i:2;a:0:{}s:12:\"_multiwidget\";i:1;}','yes'),
+(120,0,'large_size_w','1024','yes'),
+(121,0,'large_size_h','1024','yes'),
+(122,0,'image_default_link_type','file','yes'),
+(123,0,'image_default_size','','yes'),
+(124,0,'image_default_align','','yes'),
+(125,0,'close_comments_for_old_posts','0','yes'),
+(126,0,'close_comments_days_old','14','yes'),
+(127,0,'thread_comments','0','yes'),
+(128,0,'thread_comments_depth','5','yes'),
+(129,0,'page_comments','1','yes'),
+(130,0,'comments_per_page','50','yes'),
+(131,0,'default_comments_page','newest','yes'),
+(132,0,'comment_order','asc','yes'),
+(133,0,'sticky_posts','a:0:{}','yes'),
+(134,0,'timezone_string','','yes'),
+(138,0,'nonce_salt','af9RZfyiZSvdZ(K1vIA5Cbz8&@9k$ookLXCWhZR0)WahE3(aylGy54s^cC0ruDp%','yes'),
+(143,0,'can_compress_scripts','1','yes');
 /*!40000 ALTER TABLE `wp_options` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -351,63 +382,73 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `wp_postmeta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wp_postmeta` (
-  `meta_id` bigint(20) NOT NULL auto_increment,
-  `post_id` bigint(20) NOT NULL default '0',
-  `meta_key` varchar(255) default NULL,
+  `meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `post_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `meta_key` varchar(255) DEFAULT NULL,
   `meta_value` longtext,
-  PRIMARY KEY  (`meta_id`),
+  PRIMARY KEY (`meta_id`),
   KEY `post_id` (`post_id`),
   KEY `meta_key` (`meta_key`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `wp_posts`
 --
 
 DROP TABLE IF EXISTS `wp_posts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wp_posts` (
-  `ID` bigint(20) unsigned NOT NULL auto_increment,
-  `post_author` bigint(20) NOT NULL default '0',
-  `post_date` datetime NOT NULL default '0000-00-00 00:00:00',
-  `post_date_gmt` datetime NOT NULL default '0000-00-00 00:00:00',
+  `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `post_author` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `post_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `post_date_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `post_content` longtext NOT NULL,
   `post_title` text NOT NULL,
-  `post_category` int(4) NOT NULL default '0',
+  `post_category` int(4) NOT NULL DEFAULT '0',
   `post_excerpt` text NOT NULL,
-  `post_status` varchar(20) NOT NULL default 'publish',
-  `comment_status` varchar(20) NOT NULL default 'closed',
-  `ping_status` varchar(20) NOT NULL default 'open',
-  `post_password` varchar(20) NOT NULL default '',
-  `post_name` varchar(200) NOT NULL default '',
+  `post_status` varchar(20) NOT NULL DEFAULT 'publish',
+  `comment_status` varchar(20) NOT NULL DEFAULT 'open',
+  `ping_status` varchar(20) NOT NULL DEFAULT 'open',
+  `post_password` varchar(20) NOT NULL DEFAULT '',
+  `post_name` varchar(200) NOT NULL DEFAULT '',
   `to_ping` text NOT NULL,
   `pinged` text NOT NULL,
-  `post_modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  `post_modified_gmt` datetime NOT NULL default '0000-00-00 00:00:00',
+  `post_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `post_modified_gmt` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `post_content_filtered` text NOT NULL,
-  `post_parent` bigint(20) NOT NULL default '0',
-  `guid` varchar(255) NOT NULL default '',
-  `menu_order` int(11) NOT NULL default '0',
-  `post_type` varchar(20) NOT NULL default 'post',
-  `post_mime_type` varchar(100) NOT NULL default '',
-  `comment_count` bigint(20) NOT NULL default '0',
-  PRIMARY KEY  (`ID`),
+  `post_parent` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `guid` varchar(255) NOT NULL DEFAULT '',
+  `menu_order` int(11) NOT NULL DEFAULT '0',
+  `post_type` varchar(20) NOT NULL DEFAULT 'post',
+  `post_mime_type` varchar(100) NOT NULL DEFAULT '',
+  `comment_count` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`),
   KEY `post_name` (`post_name`),
-  KEY `type_status_date` (`post_type`,`post_status`,`post_date`,`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  KEY `type_status_date` (`post_type`,`post_status`,`post_date`,`ID`),
+  KEY `post_parent` (`post_parent`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `wp_term_relationships`
 --
 
 DROP TABLE IF EXISTS `wp_term_relationships`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wp_term_relationships` (
-  `object_id` bigint(20) NOT NULL default '0',
-  `term_taxonomy_id` bigint(20) NOT NULL default '0',
-  `term_order` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`object_id`,`term_taxonomy_id`),
+  `object_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `term_taxonomy_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `term_order` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`object_id`,`term_taxonomy_id`),
   KEY `term_taxonomy_id` (`term_taxonomy_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `wp_term_relationships`
@@ -424,16 +465,20 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `wp_term_taxonomy`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wp_term_taxonomy` (
-  `term_taxonomy_id` bigint(20) NOT NULL auto_increment,
-  `term_id` bigint(20) NOT NULL default '0',
-  `taxonomy` varchar(32) NOT NULL default '',
+  `term_taxonomy_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `term_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `taxonomy` varchar(32) NOT NULL DEFAULT '',
   `description` longtext NOT NULL,
-  `parent` bigint(20) NOT NULL default '0',
-  `count` bigint(20) NOT NULL default '0',
-  PRIMARY KEY  (`term_taxonomy_id`),
-  UNIQUE KEY `term_id_taxonomy` (`term_id`,`taxonomy`)
+  `parent` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `count` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`term_taxonomy_id`),
+  UNIQUE KEY `term_id_taxonomy` (`term_id`,`taxonomy`),
+  KEY `taxonomy` (`taxonomy`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `wp_term_taxonomy`
@@ -450,30 +495,36 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `wp_terms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wp_terms` (
-  `term_id` bigint(20) NOT NULL auto_increment,
-  `name` varchar(200) NOT NULL default '',
-  `slug` varchar(200) NOT NULL default '',
-  `term_group` bigint(10) NOT NULL default '0',
-  PRIMARY KEY  (`term_id`),
+  `term_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL DEFAULT '',
+  `slug` varchar(200) NOT NULL DEFAULT '',
+  `term_group` bigint(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`term_id`),
   UNIQUE KEY `slug` (`slug`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `wp_usermeta`
 --
 
 DROP TABLE IF EXISTS `wp_usermeta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wp_usermeta` (
-  `umeta_id` bigint(20) NOT NULL auto_increment,
-  `user_id` bigint(20) NOT NULL default '0',
-  `meta_key` varchar(255) default NULL,
+  `umeta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `meta_key` varchar(255) DEFAULT NULL,
   `meta_value` longtext,
-  PRIMARY KEY  (`umeta_id`),
+  PRIMARY KEY (`umeta_id`),
   KEY `user_id` (`user_id`),
   KEY `meta_key` (`meta_key`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `wp_usermeta`
@@ -490,22 +541,25 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `wp_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wp_users` (
-  `ID` bigint(20) unsigned NOT NULL auto_increment,
-  `user_login` varchar(60) NOT NULL default '',
-  `user_pass` varchar(64) NOT NULL default '',
-  `user_nicename` varchar(50) NOT NULL default '',
-  `user_email` varchar(100) NOT NULL default '',
-  `user_url` varchar(100) NOT NULL default '',
-  `user_registered` datetime NOT NULL default '0000-00-00 00:00:00',
-  `user_activation_key` varchar(60) NOT NULL default '',
-  `user_status` int(11) NOT NULL default '0',
-  `display_name` varchar(250) NOT NULL default '',
-  PRIMARY KEY  (`ID`),
+  `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_login` varchar(60) NOT NULL DEFAULT '',
+  `user_pass` varchar(64) NOT NULL DEFAULT '',
+  `user_nicename` varchar(50) NOT NULL DEFAULT '',
+  `user_email` varchar(100) NOT NULL DEFAULT '',
+  `user_url` varchar(100) NOT NULL DEFAULT '',
+  `user_registered` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `user_activation_key` varchar(60) NOT NULL DEFAULT '',
+  `user_status` int(11) NOT NULL DEFAULT '0',
+  `display_name` varchar(250) NOT NULL DEFAULT '',
+  PRIMARY KEY (`ID`),
   KEY `user_login_key` (`user_login`),
   KEY `user_nicename` (`user_nicename`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
@@ -513,8 +567,6 @@ CREATE TABLE `wp_users` (
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2008-08-20 23:58:49
 ]]>
 </file>
 
