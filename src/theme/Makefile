@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.15 2009/05/01 19:07:33 mjk Exp $
+# $Id: Makefile,v 1.16 2010/08/25 22:26:29 bruno Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,9 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.16  2010/08/25 22:26:29  bruno
+# refresh for 5.4 beta
+#
 # Revision 1.15  2009/05/01 19:07:33  mjk
 # chimi con queso
 #
@@ -117,7 +120,7 @@
 #
 
 REDHAT.ROOT     = $(CURDIR)/../../
-ROCKSROOT       = ../../../../..
+
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 

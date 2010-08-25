@@ -1,3 +1,3 @@
 NAME		= wordpress
-VERSION		= 2.8.4
+VERSION		= 3.0.1
 RELEASE		= 1
