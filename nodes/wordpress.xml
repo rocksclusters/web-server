@@ -8,6 +8,9 @@ WordPress configuration
 
 <changelog>
 $Log: wordpress.xml,v $
+Revision 1.27  2010/08/27 19:54:05  bruno
+update schema to match refreshed wordpress
+
 Revision 1.26  2009/10/16 18:42:16  bruno
 update database for new version of wordpress
 
@@ -180,6 +183,24 @@ grant all privileges on wordpress.* to "wordpress"@"localhost" identified by "";
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `wp_commentmeta`
+--
+
+DROP TABLE IF EXISTS `wp_commentmeta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `wp_commentmeta` (
+  `meta_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `comment_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `meta_key` varchar(255) DEFAULT NULL,
+  `meta_value` longtext,
+  PRIMARY KEY (`meta_id`),
+  KEY `comment_id` (`comment_id`),
+  KEY `meta_key` (`meta_key`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `wp_comments`
 --
 
@@ -206,7 +227,8 @@ CREATE TABLE `wp_comments` (
   KEY `comment_approved` (`comment_approved`),
   KEY `comment_post_ID` (`comment_post_ID`),
   KEY `comment_approved_date_gmt` (`comment_approved`,`comment_date_gmt`),
-  KEY `comment_date_gmt` (`comment_date_gmt`)
+  KEY `comment_date_gmt` (`comment_date_gmt`),
+  KEY `comment_parent` (`comment_parent`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -251,9 +273,9 @@ CREATE TABLE `wp_options` (
   `option_name` varchar(64) NOT NULL DEFAULT '',
   `option_value` longtext NOT NULL,
   `autoload` varchar(20) NOT NULL DEFAULT 'yes',
-  PRIMARY KEY (`option_id`,`blog_id`,`option_name`),
-  KEY `option_name` (`option_name`)
-) ENGINE=MyISAM AUTO_INCREMENT=166 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`option_id`),
+  UNIQUE KEY `option_name` (`option_name`)
+) ENGINE=MyISAM AUTO_INCREMENT=179 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -274,7 +296,6 @@ INSERT INTO `wp_options` VALUES
 (9,0,'require_name_email','1','yes'),
 (10,0,'comments_notify','1','yes'),
 (11,0,'posts_per_rss','10','yes'),
-(12,0,'rss_excerpt_length','50','yes'),
 (13,0,'rss_use_excerpt','0','yes'),
 (14,0,'mailserver_url','mail.example.com','yes'),
 (15,0,'mailserver_login','login@example.com','yes'),
@@ -309,7 +330,6 @@ INSERT INTO `wp_options` VALUES
 (44,0,'gmt_offset','-7','yes'),
 (45,0,'default_email_category','1','yes'),
 (46,0,'recently_edited','','no'),
-(47,0,'use_linksupdate','0','yes'),
 (48,0,'template','default','yes'),
 (49,0,'stylesheet','default','yes'),
 (50,0,'comment_whitelist','1','yes'),
@@ -319,7 +339,7 @@ INSERT INTO `wp_options` VALUES
 (55,0,'html_type','text/html','yes'),
 (56,0,'use_trackback','0','yes'),
 (57,0,'default_role','subscriber','yes'),
-(58,0,'db_version','11548','yes'),
+(58,0,'db_version','15477','yes'),
 (59,0,'uploads_use_yearmonth_folders','1','yes'),
 (60,0,'upload_path','/var/www/html/wordpress/wp-content/uploads','yes'),
 (62,0,'blog_public','1','yes'),
@@ -337,8 +357,8 @@ INSERT INTO `wp_options` VALUES
 (74,0,'avatar_default','mystery','yes'),
 (75,0,'enable_app','0','yes'),
 (76,0,'enable_xmlrpc','0','yes'),
-(77,0,'wp_user_roles','a:5:{s:13:\"administrator\";a:2:{s:4:\"name\";s:23:\"Administrator|User role\";s:12:\"capabilities\";a:54:{s:13:\"switch_themes\";b:1;s:11:\"edit_themes\";b:1;s:16:\"activate_plugins\";b:1;s:12:\"edit_plugins\";b:1;s:10:\"edit_users\";b:1;s:10:\"edit_files\";b:1;s:14:\"manage_options\";b:1;s:17:\"moderate_comments\";b:1;s:17:\"manage_categories\";b:1;s:12:\"manage_links\";b:1;s:12:\"upload_files\";b:1;s:6:\"import\";b:1;s:15:\"unfiltered_html\";b:1;s:10:\"edit_posts\";b:1;s:17:\"edit_others_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:10:\"edit_pages\";b:1;s:4:\"read\";b:1;s:8:\"level_10\";b:1;s:7:\"level_9\";b:1;s:7:\"level_8\";b:1;s:7:\"level_7\";b:1;s:7:\"level_6\";b:1;s:7:\"level_5\";b:1;s:7:\"level_4\";b:1;s:7:\"level_3\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:17:\"edit_others_pages\";b:1;s:20:\"edit_published_pages\";b:1;s:13:\"publish_pages\";b:1;s:12:\"delete_pages\";b:1;s:19:\"delete_others_pages\";b:1;s:22:\"delete_published_pages\";b:1;s:12:\"delete_posts\";b:1;s:19:\"delete_others_posts\";b:1;s:22:\"delete_published_posts\";b:1;s:20:\"delete_private_posts\";b:1;s:18:\"edit_private_posts\";b:1;s:18:\"read_private_posts\";b:1;s:20:\"delete_private_pages\";b:1;s:18:\"edit_private_pages\";b:1;s:18:\"read_private_pages\";b:1;s:12:\"delete_users\";b:1;s:12:\"create_users\";b:1;s:17:\"unfiltered_upload\";b:1;s:14:\"edit_dashboard\";b:1;s:14:\"update_plugins\";b:1;s:14:\"delete_plugins\";b:1;s:15:\"install_plugins\";b:1;s:13:\"update_themes\";b:1;s:14:\"install_themes\";b:1;}}s:6:\"editor\";a:2:{s:4:\"name\";s:16:\"Editor|User role\";s:12:\"capabilities\";a:34:{s:17:\"moderate_comments\";b:1;s:17:\"manage_categories\";b:1;s:12:\"manage_links\";b:1;s:12:\"upload_files\";b:1;s:15:\"unfiltered_html\";b:1;s:10:\"edit_posts\";b:1;s:17:\"edit_others_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:10:\"edit_pages\";b:1;s:4:\"read\";b:1;s:7:\"level_7\";b:1;s:7:\"level_6\";b:1;s:7:\"level_5\";b:1;s:7:\"level_4\";b:1;s:7:\"level_3\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:17:\"edit_others_pages\";b:1;s:20:\"edit_published_pages\";b:1;s:13:\"publish_pages\";b:1;s:12:\"delete_pages\";b:1;s:19:\"delete_others_pages\";b:1;s:22:\"delete_published_pages\";b:1;s:12:\"delete_posts\";b:1;s:19:\"delete_others_posts\";b:1;s:22:\"delete_published_posts\";b:1;s:20:\"delete_private_posts\";b:1;s:18:\"edit_private_posts\";b:1;s:18:\"read_private_posts\";b:1;s:20:\"delete_private_pages\";b:1;s:18:\"edit_private_pages\";b:1;s:18:\"read_private_pages\";b:1;}}s:6:\"author\";a:2:{s:4:\"name\";s:16:\"Author|User role\";s:12:\"capabilities\";a:10:{s:12:\"upload_files\";b:1;s:10:\"edit_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:4:\"read\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:12:\"delete_posts\";b:1;s:22:\"delete_published_posts\";b:1;}}s:11:\"contributor\";a:2:{s:4:\"name\";s:21:\"Contributor|User role\";s:12:\"capabilities\";a:5:{s:10:\"edit_posts\";b:1;s:4:\"read\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:12:\"delete_posts\";b:1;}}s:10:\"subscriber\";a:2:{s:4:\"name\";s:20:\"Subscriber|User role\";s:12:\"capabilities\";a:2:{s:4:\"read\";b:1;s:7:\"level_0\";b:1;}}}','yes'),
-(78,0,'cron','a:3:{i:1255737442;a:1:{s:17:\"wp_update_plugins\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}}i:1255758775;a:2:{s:16:\"wp_version_check\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}s:16:\"wp_update_themes\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}}s:7:\"version\";i:2;}','yes'),
+(77,0,'wp_user_roles','a:5:{s:13:\"administrator\";a:2:{s:4:\"name\";s:23:\"Administrator|User role\";s:12:\"capabilities\";a:62:{s:13:\"switch_themes\";b:1;s:11:\"edit_themes\";b:1;s:16:\"activate_plugins\";b:1;s:12:\"edit_plugins\";b:1;s:10:\"edit_users\";b:1;s:10:\"edit_files\";b:1;s:14:\"manage_options\";b:1;s:17:\"moderate_comments\";b:1;s:17:\"manage_categories\";b:1;s:12:\"manage_links\";b:1;s:12:\"upload_files\";b:1;s:6:\"import\";b:1;s:15:\"unfiltered_html\";b:1;s:10:\"edit_posts\";b:1;s:17:\"edit_others_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:10:\"edit_pages\";b:1;s:4:\"read\";b:1;s:8:\"level_10\";b:1;s:7:\"level_9\";b:1;s:7:\"level_8\";b:1;s:7:\"level_7\";b:1;s:7:\"level_6\";b:1;s:7:\"level_5\";b:1;s:7:\"level_4\";b:1;s:7:\"level_3\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:17:\"edit_others_pages\";b:1;s:20:\"edit_published_pages\";b:1;s:13:\"publish_pages\";b:1;s:12:\"delete_pages\";b:1;s:19:\"delete_others_pages\";b:1;s:22:\"delete_published_pages\";b:1;s:12:\"delete_posts\";b:1;s:19:\"delete_others_posts\";b:1;s:22:\"delete_published_posts\";b:1;s:20:\"delete_private_posts\";b:1;s:18:\"edit_private_posts\";b:1;s:18:\"read_private_posts\";b:1;s:20:\"delete_private_pages\";b:1;s:18:\"edit_private_pages\";b:1;s:18:\"read_private_pages\";b:1;s:12:\"delete_users\";b:1;s:12:\"create_users\";b:1;s:17:\"unfiltered_upload\";b:1;s:14:\"edit_dashboard\";b:1;s:14:\"update_plugins\";b:1;s:14:\"delete_plugins\";b:1;s:15:\"install_plugins\";b:1;s:13:\"update_themes\";b:1;s:14:\"install_themes\";b:1;s:11:\"update_core\";b:1;s:10:\"list_users\";b:1;s:12:\"remove_users\";b:1;s:9:\"add_users\";b:1;s:13:\"promote_users\";b:1;s:18:\"edit_theme_options\";b:1;s:13:\"delete_themes\";b:1;s:6:\"export\";b:1;}}s:6:\"editor\";a:2:{s:4:\"name\";s:16:\"Editor|User role\";s:12:\"capabilities\";a:34:{s:17:\"moderate_comments\";b:1;s:17:\"manage_categories\";b:1;s:12:\"manage_links\";b:1;s:12:\"upload_files\";b:1;s:15:\"unfiltered_html\";b:1;s:10:\"edit_posts\";b:1;s:17:\"edit_others_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:10:\"edit_pages\";b:1;s:4:\"read\";b:1;s:7:\"level_7\";b:1;s:7:\"level_6\";b:1;s:7:\"level_5\";b:1;s:7:\"level_4\";b:1;s:7:\"level_3\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:17:\"edit_others_pages\";b:1;s:20:\"edit_published_pages\";b:1;s:13:\"publish_pages\";b:1;s:12:\"delete_pages\";b:1;s:19:\"delete_others_pages\";b:1;s:22:\"delete_published_pages\";b:1;s:12:\"delete_posts\";b:1;s:19:\"delete_others_posts\";b:1;s:22:\"delete_published_posts\";b:1;s:20:\"delete_private_posts\";b:1;s:18:\"edit_private_posts\";b:1;s:18:\"read_private_posts\";b:1;s:20:\"delete_private_pages\";b:1;s:18:\"edit_private_pages\";b:1;s:18:\"read_private_pages\";b:1;}}s:6:\"author\";a:2:{s:4:\"name\";s:16:\"Author|User role\";s:12:\"capabilities\";a:10:{s:12:\"upload_files\";b:1;s:10:\"edit_posts\";b:1;s:20:\"edit_published_posts\";b:1;s:13:\"publish_posts\";b:1;s:4:\"read\";b:1;s:7:\"level_2\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:12:\"delete_posts\";b:1;s:22:\"delete_published_posts\";b:1;}}s:11:\"contributor\";a:2:{s:4:\"name\";s:21:\"Contributor|User role\";s:12:\"capabilities\";a:5:{s:10:\"edit_posts\";b:1;s:4:\"read\";b:1;s:7:\"level_1\";b:1;s:7:\"level_0\";b:1;s:12:\"delete_posts\";b:1;}}s:10:\"subscriber\";a:2:{s:4:\"name\";s:20:\"Subscriber|User role\";s:12:\"capabilities\";a:2:{s:4:\"read\";b:1;s:7:\"level_0\";b:1;}}}','yes'),
+(78,0,'cron','a:3:{i:1282953442;a:1:{s:17:\"wp_update_plugins\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}}i:1282974775;a:2:{s:16:\"wp_version_check\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}s:16:\"wp_update_themes\";a:1:{s:32:\"40cd750bba9870f18aada2478b24840a\";a:3:{s:8:\"schedule\";s:10:\"twicedaily\";s:4:\"args\";a:0:{}s:8:\"interval\";i:43200;}}}s:7:\"version\";i:2;}','yes'),
 (79,0,'auth_salt','4(zBVL$OVJK8','yes'),
 (84,0,'logged_in_salt',')S8rx1J&#xl0','yes'),
 (85,0,'dashboard_widget_options','a:3:{s:24:\"dashboard_incoming_links\";a:5:{s:4:\"home\";s:47:\"http://localhost/wordpress\";s:4:\"link\";s:129:\"http://blogsearch.google.com/blogsearch?hl=en&scoring=d&partner=wordpress&q=link:http://localhost/wordpress/\";s:3:\"url\";s:141:\"http://blogsearch.google.com/blogsearch_feeds?hl=en&scoring=d&ie=utf-8&num=10&output=rss&partner=wordpress&q=link:http://localhost/wordpress/\";s:5:\"items\";i:5;s:9:\"show_date\";i:0;}s:17:\"dashboard_primary\";a:7:{s:4:\"link\";s:33:\"http://wordpress.org/development/\";s:3:\"url\";s:38:\"http://wordpress.org/development/feed/\";s:5:\"title\";s:26:\"WordPress Development Blog\";s:5:\"items\";i:2;s:12:\"show_summary\";i:1;s:11:\"show_author\";i:0;s:9:\"show_date\";i:1;}s:19:\"dashboard_secondary\";a:4:{s:4:\"link\";s:28:\"http://planet.wordpress.org/\";s:3:\"url\";s:33:\"http://planet.wordpress.org/feed/\";s:5:\"title\";s:20:\"Other WordPress News\";s:5:\"items\";i:15;}}','yes'),
@@ -373,7 +393,17 @@ INSERT INTO `wp_options` VALUES
 (133,0,'sticky_posts','a:0:{}','yes'),
 (134,0,'timezone_string','','yes'),
 (138,0,'nonce_salt','af9RZfyiZSvdZ(K1vIA5Cbz8&@9k$ookLXCWhZR0)WahE3(aylGy54s^cC0ruDp%','yes'),
-(143,0,'can_compress_scripts','1','yes');
+(166,0,'_transient_doing_cron','1282932672','yes'),
+(167,0,'_site_transient_timeout_theme_roots','1282936309','yes'),
+(168,0,'_site_transient_theme_roots','a:3:{s:7:\"default\";s:7:\"/themes\";s:5:\"rocks\";s:7:\"/themes\";s:9:\"twentyten\";s:7:\"/themes\";}','yes'),
+(169,0,'_site_transient_update_plugins','O:8:\"stdClass\":3:{s:12:\"last_checked\";i:1282929109;s:7:\"checked\";a:2:{s:19:\"akismet/akismet.php\";s:5:\"2.3.0\";s:9:\"hello.php\";s:5:\"1.5.1\";}s:8:\"response\";a:1:{s:19:\"akismet/akismet.php\";O:8:\"stdClass\":5:{s:2:\"id\";s:2:\"15\";s:4:\"slug\";s:7:\"akismet\";s:11:\"new_version\";s:5:\"2.4.0\";s:3:\"url\";s:44:\"http://wordpress.org/extend/plugins/akismet/\";s:7:\"package\";s:55:\"http://downloads.wordpress.org/plugin/akismet.2.4.0.zip\";}}}','yes'),
+(171,0,'_site_transient_update_themes','O:8:\"stdClass\":1:{s:12:\"last_checked\";i:1282932672;}','yes'),
+(172,0,'widget_nav_menu','a:2:{i:2;a:0:{}s:12:\"_multiwidget\";i:1;}','yes'),
+(173,0,'embed_autourls','1','yes'),
+(174,0,'embed_size_w','','yes'),
+(175,0,'embed_size_h','600','yes'),
+(176,0,'page_for_posts','0','yes'),
+(177,0,'page_on_front','0','yes');
 /*!40000 ALTER TABLE `wp_options` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -430,7 +460,8 @@ CREATE TABLE `wp_posts` (
   PRIMARY KEY (`ID`),
   KEY `post_name` (`post_name`),
   KEY `type_status_date` (`post_type`,`post_status`,`post_date`,`ID`),
-  KEY `post_parent` (`post_parent`)
+  KEY `post_parent` (`post_parent`),
+  KEY `post_author` (`post_author`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
