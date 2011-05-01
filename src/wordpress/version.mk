@@ -1,3 +1,5 @@
 NAME		= wordpress
-VERSION		= 3.0.1
+VERSION		= 3.1.2
 RELEASE		= 1
+DBVERSION	= 17516
+BASETHEME	= twentyten

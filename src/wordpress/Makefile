@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.15 2010/09/07 23:53:31 bruno Exp $
+# $Id: Makefile,v 1.16 2011/05/01 02:54:51 phil Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,10 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.16  2011/05/01 02:54:51  phil
+# Updated Wordpress.
+# New theme for cluster web site
+#
 # Revision 1.15  2010/09/07 23:53:31  bruno
 # star power for gb
 #
@@ -121,6 +125,9 @@
 PKGROOT		= /var/www/html/wordpress
 REDHAT.ROOT     = $(CURDIR)/../../
 
+HTTPDCONFD	= /etc/httpd/conf.d
+CONFFILE	= rocks-wordpress.conf
+
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 
@@ -138,6 +145,18 @@ install::
 		cd $(NAME);						\
 		find . | cpio -pduv $(ROOT)/$(PKGROOT);			\
 	)
+	mkdir -p $(ROOT)/$(PKGROOT)/wpdb
+	(								\
+		cd wpdb_$(DBVERSION);					\
+		find . | cpio -pduv $(ROOT)/$(PKGROOT)/wpdb;		\
+	)
+	mkdir -p $(ROOT)/$(HTTPDCONFD)
+	install -m644 $(CONFFILE) $(ROOT)/$(HTTPDCONFD)
+	if [ ! -d $(ROOT)/$(PKGROOT)/wp-content/themes/$(BASETHEME) ]; then \
+		mkdir -p $(ROOT)/$(PKGROOT)/wp-content/themes/$(BASETHEME); fi
+	cd $(BASETHEME); find . -name CVS -prune -o -print |  	\
+		cpio -pduv $(ROOT)/$(PKGROOT)/wp-content/themes/$(BASETHEME)
+
 
 clean::
 	rm -rf $(NAME)

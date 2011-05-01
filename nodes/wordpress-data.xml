@@ -8,6 +8,10 @@ WordPress data
 
 <changelog>
 $Log: wordpress-data.xml,v $
+Revision 1.24  2011/05/01 02:54:51  phil
+Updated Wordpress.
+New theme for cluster web site
+
 Revision 1.23  2009/10/16 17:57:54  bruno
 the one and true view of the graph
 
@@ -96,104 +100,16 @@ touch ups
 
 <post>
 
-<file name="/tmp/rocks-wp.sql">
-
-update wp_options set
-	option_value='http://&Kickstart_PublicHostname;/wordpress'
-	where option_name='siteurl';	
-
-update wp_options set
-	option_value='&Kickstart_PrivateHostname;'
-	where option_name='blogname';
-
-insert into wp_users values (2, 'admin',
-	'&Kickstart_PrivatePortableRootPassword;', 'admin',
-	'&Info_ClusterContact;', '', NOW(), '', 0, 'admin');
-
-insert into wp_terms values
-	(1, 'Cluster Links', 'clusterlink', 0);
-
-<!-- put in the initial links -->
-
-insert into wp_links (link_name, link_description, link_url, link_category)
-	values ('Users Guide', 'Info about Rocks Clusters',
-	'/roll-documentation/base/&version;/',
-	1);
-
-insert into wp_links (link_name, link_description, link_url, link_category)
-	values ('Roll Docs', 'Documentation for the installed rolls',
-	'/roll-documentation/',
-	1);
-
-insert into wp_links (link_name, link_description, link_url, link_category)
-	values ('Support', 'Get help at the Rocks Web Site',
-	'http://support.rocksclusters.org', 
-	1);
-
-<!-- put in the initial posts -->
-
-insert into wp_posts (
-		post_title,
-		post_content,
-		post_excerpt,
-		post_name,
-		post_author,
-		post_date,
-		post_date_gmt, 
-		post_modified,
-		post_modified_gmt
-	)
-	values(
-		'&Info_ClusterName; is installed.',
-'Click on the links above to monitor your cluster and to learn more about how to use it.
-
-In addition, you can optionally &lt;a href="http://www.rocksclusters.org/rocks-register/insert.php"&gt;register this cluster&lt;/a&gt;. The National Science Foundation is our primary funding vehicle. While we have several measurements of Rocks usage (downloads, number of list subscribers, number of posts), the registry gives our funding agency an additional and significant device for evaluation. It also lets us know which platforms are the most important to Rocks users and what sizes of clusters our software must support.
-
-To add more content to this site, click on the link below that is labeled: "Add content to this web site".',
-		'',
-		'installed',
-		(select wp_users.id from wp_users where wp_users.user_login="admin"),
-		now(),
-		utc_timestamp(),
-		now(),
-		utc_timestamp()
-	);
-
-insert into wp_posts (
-		post_title,
-		post_content,
-		post_excerpt,
-		post_status,
-		post_name,
-		post_author,
-		post_date,
-		post_date_gmt, 
-		post_modified,
-		post_modified_gmt,
-		post_type
-	)
-	values(
-		'Misc Admin',
-		'&lt;h3&gt; Kickstart Graph &lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt; &lt;a href="/misc/dot-graph.php?size=85,85"&gt;large&lt;/a&gt; &lt;/li&gt;
-&lt;li&gt; &lt;a href="/misc/dot-graph.php?size=75,75"&gt;medium&lt;/a&gt; &lt;/li&gt;
-&lt;li&gt; &lt;a href="/misc/dot-graph.php?size=65,65"&gt;small&lt;/a&gt; &lt;/li&gt;
-&lt;/ul&gt;',
-		'',
-		'publish',
-		'misc-admin',
-		(select wp_users.id from wp_users where wp_users.user_login="admin"),
-                now(),
-                utc_timestamp(),
-                now(),
-                utc_timestamp(),
-		'page'
-	);
-		
-</file>
-
-/opt/rocks/bin/mysql -u wordpress wordpress &lt; /tmp/rocks-wp.sql
+<!-- Populate the Wordpress Database will Generic and Initial Post Information --> 
+cd /var/www/html/wordpress/wpdb
+PDATE=`date +'%F %T'`
+PPASS='&Kickstart_PrivatePortableRootPassword;' 
+cat wordpress3-structure.sql wordpress3-data-generic.sql wordpress3-data-local.sql | \
+./localize.py "{ '&amp;hostname;':'&hostname;',
+'&amp;Kickstart_PublicDNSDomain;':'&Kickstart_PublicDNSDomain;', 
+'&amp;Wordpress_PressDate;':\"$PDATE\", 
+'&amp;Kickstart_PrivatePortableRootPassword;':\"$PPASS\", 
+'&amp;Info_ClusterContact;':'&Info_ClusterContact;' }" | /opt/rocks/bin/mysql -u wordpress wordpress 
 </post>
 
 </kickstart>

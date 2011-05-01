@@ -1,0 +1,14 @@
+This is the Wordpress database structure, generic data population,
+and localized data populuation. These files are specific to a particular Wordpress database schema.
+One can update Wordpress versions that have the same DB schema and still use these files.
+When the DB Schema is changed, these files need to be revisited.
+
+They are split as
+ -structure -- the generic structure of the wordpress DB
+ -data-generic -- the generic data in the DB that is not cluster-specific
+ -data-local -- the rest of the data in the DB that IS cluster-specific
+
+A sample SQL File would then be generated as
+PDATE=`date +'%F %T'`
+cat wordpress3-structure.sql wordpress3-data-generic.sql wordpress3-data-local.sql | \
+./localize.py "{ '&hostname;':'test','&Kickstart_PublicDNSDomain;':'rocksclusters.org', '&Wordpress_PressDate;':\"$PDATE\", '&Kickstart_PrivatePortableRootPassword;': '', '&Info_ClusterContact;':'user@admin.com' }"
