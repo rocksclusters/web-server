@@ -27,7 +27,7 @@ LOCK TABLES `wp_links` WRITE;
 INSERT INTO wp_links( link_id, link_url, link_name, link_description, link_notes)
 VALUES (101,'/ganglia','Monitor Your Cluster','Ganglia Cluster Monitoring',''),
 (102,'/tripwire','Tripwire','Tripwire System Intrusion Detection',''),
-(103,'/misc/dot-graph.php?size=450,450','Kickstart Graph','What\'s in your cluster?',''),
+(103,'/misc/dot-graph.php?size=45,45','Kickstart Graph','What\'s in your cluster?',''),
 (104,'/roll-documentation','Roll Documentation','User Guides for Installed Rolls','');
 UNLOCK TABLES;
 
@@ -52,7 +52,7 @@ LOCK TABLES `wp_posts` WRITE;
 INSERT INTO `wp_posts` VALUES 
 (1,1,'&Wordpress_PressDate;','&Wordpress_PressDate;','<a title=\"Rocks Web Site\" href=\"http://www.rocksclusters.org\"><img class=\"alignleft\" src=\"/wordpress/wp-content/themes/twentyten/images/Rocks-logo-small.jpg\" alt=\"\" width=\"40\" height=\"40\" /></a>&hostname;.&Kickstart_PublicDNSDomain; successfully installed! Please <a href=\"http://www.rocksclusters.org/rocks-register/insert.php\">register</a> your cluster! Rocks is supported by the National Science Foundation under Grants <a href=\"http://www.nsf.gov/awardsearch/showAward.do?AwardNumber=1032778\">OCI-1032778</a> and <a href=\"http://www.nsf.gov/awardsearch/showAward.do?AwardNumber=0721623\">OCI-0721623</a>.','Cluster Installed','','publish','open','open','','hello-world','','','&Wordpress_PressDate;','&Wordpress_PressDate;','',0,'http://&hostname;.&Kickstart_PublicDNSDomain;/wordpress/?p=1',0,'post','',0),
 (2,1,'&Wordpress_PressDate;','0000-00-00 00:00:00','Display Your Cluster&#8217;s Kickstart Graph\r\n\r\n	Small\r\n	Medium\r\n	Large\r\n','','','draft','open','open','','','','','&Wordpress_PressDate;','0000-00-00 00:00:00','',0,'http://&hostname;.&Kickstart_PublicDNSDomain;/wordpress/?p=2',1,'nav_menu_item','',0),
-(3,1,'&Wordpress_PressDate;','&Wordpress_PressDate;','<strong>Display Your Cluster\'s Kickstart Graph</strong>\r\n<ul>\r\n	<li><a title=\"Small Kickstart Graph\" href=\"/misc/dot-graph.php?size=85,85\">Small</a></li>\r\n	<li><a href=\"/misc/dot-graph.php?size=300,300\">Medium</a></li>\r\n	<li><a href=\"/misc/dot-graph.php?size=1500,1500\">Large</a></li>\r\n</ul>','Miscellaneous Admin','','publish','open','open','','miscellaneous-admin','','','&Wordpress_PressDate;','&Wordpress_PressDate;','',0,'http://&hostname;.&Kickstart_PublicDNSDomain;/wordpress/?page_id=3',0,'page','',0);
+(3,1,'&Wordpress_PressDate;','&Wordpress_PressDate;','<strong>Display Your Cluster\'s Kickstart Graph</strong>\r\n<ul>\r\n	<li><a title=\"Small Kickstart Graph\" href=\"/misc/dot-graph.php?size=35,35\">Small</a></li>\r\n	<li><a href=\"/misc/dot-graph.php?size=45,45\">Medium</a></li>\r\n	<li><a href=\"/misc/dot-graph.php?size=55,55\">Large</a></li>\r\n</ul>','Miscellaneous Admin','','publish','open','open','','miscellaneous-admin','','','&Wordpress_PressDate;','&Wordpress_PressDate;','',0,'http://&hostname;.&Kickstart_PublicDNSDomain;/wordpress/?page_id=3',0,'page','',0);
 UNLOCK TABLES;
 
 /*---
