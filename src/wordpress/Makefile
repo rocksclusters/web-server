@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.16 2011/05/01 02:54:51 phil Exp $
+# $Id: Makefile,v 1.17 2011/05/02 20:48:58 phil Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,10 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.17  2011/05/02 20:48:58  phil
+# Add an uploads directory so that some standard wp functions can complete
+# when editing a site interactively.
+#
 # Revision 1.16  2011/05/01 02:54:51  phil
 # Updated Wordpress.
 # New theme for cluster web site
@@ -156,6 +160,8 @@ install::
 		mkdir -p $(ROOT)/$(PKGROOT)/wp-content/themes/$(BASETHEME); fi
 	cd $(BASETHEME); find . -name CVS -prune -o -print |  	\
 		cpio -pduv $(ROOT)/$(PKGROOT)/wp-content/themes/$(BASETHEME)
+	mkdir -p $(ROOT)/$(PKGROOT)/wp-content/uploads
+	chmod 1777 $(ROOT)/$(PKGROOT)/wp-content/uploads
 
 
 clean::
