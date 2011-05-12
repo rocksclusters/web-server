@@ -1,5 +1,5 @@
 #
-# $Id: Makefile,v 1.12 2010/09/07 23:53:31 bruno Exp $
+# $Id: Makefile,v 1.13 2011/05/12 00:49:41 phil Exp $
 #
 # @Copyright@
 # 
@@ -55,6 +55,9 @@
 # @Copyright@
 #
 # $Log: Makefile,v $
+# Revision 1.13  2011/05/12 00:49:41  phil
+# Rocks website theme and support images
+#
 # Revision 1.12  2010/09/07 23:53:31  bruno
 # star power for gb
 #
@@ -112,16 +115,27 @@ REDHAT.ROOT     = $(CURDIR)/../../
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 
-build::
+THEMES = margo-1.0.zip
+PLUGINS =  iframe.zip  exec-php.4.9.zip 
+
+build:
+	mkdir -p BUILD/$(PKGROOT)
+	mkdir -p BUILD/$(THEMEDIR)
+	mkdir -p BUILD/$(PLUGINDIR)
+	for i in $(PLUGINS); do unzip $$i -d BUILD/$(PLUGINDIR); done
+	for i in $(THEMES); do unzip $$i -d BUILD/$(THEMEDIR); done
 
 install:: 
-	mkdir -p $(ROOT)/$(PKGROOT)/images/
-
-	-$(INSTALL) -m 0444 images/*jpg $(ROOT)/$(PKGROOT)/images
-	-$(INSTALL) -m 0444 images/*png $(ROOT)/$(PKGROOT)/images
-
-	mkdir -p $(ROOT)/$(PKGROOT)/links/
-	-$(INSTALL) -m 0444 links/*link $(ROOT)/$(PKGROOT)/links
+	mkdir -p $(ROOT)/$(PKGROOT)
+	mkdir -p $(ROOT)/$(THEMEDIR)
+	cd BUILD/$(THEMEDIR); $(TAR) cf - * | (cd $(ROOT)/$(THEMEDIR); $(TAR) xvfBp -)
+	mkdir -p $(ROOT)/$(PLUGINDIR)
+	( cd BUILD/$(PLUGINDIR); $(TAR) cf - * | \
+		(cd $(ROOT)/$(PLUGINDIR); $(TAR) xvfBp -) )
+	mkdir -p $(ROOT)/$(IMAGEDIR)
+	( cd images; $(TAR) cf - `find . -name '*jpg' -o -name '*png'` | \
+		(cd $(ROOT)/$(IMAGEDIR); $(TAR) xvfBp -) )
+	find $(ROOT)/$(IMAGEDIR) -type f -exec chmod 444 {} \;
 
 clean::
 	rm -f $(NAME).spec.in
