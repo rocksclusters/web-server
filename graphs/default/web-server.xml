@@ -51,6 +51,9 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 <changelog>
 $Log: web-server.xml,v $
+Revision 1.6  2011/06/09 21:04:28  phil
+Ordering for new DB security.
+
 Revision 1.5  2009/05/16 02:10:51  anoop
 Moved from RedHat MySQL to Rocks foundation-mysql
 rather forcefully.
@@ -84,7 +87,7 @@ the start of our new web site
 	<to>mediawiki-data</to>
 </edge>
 
-<order head="database">
+<order head="database-sec">
 	<tail>wordpress</tail>
 	<tail>mediawiki</tail>
 </order>
