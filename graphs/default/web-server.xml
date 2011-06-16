@@ -51,6 +51,9 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 <changelog>
 $Log: web-server.xml,v $
+Revision 1.7  2011/06/16 22:06:57  phil
+Add explicit wordpress DB passwd.
+
 Revision 1.6  2011/06/09 21:04:28  phil
 Ordering for new DB security.
 
@@ -81,6 +84,7 @@ the start of our new web site
 
 
 <edge from="server">
+	<to>wordpress-sec</to>
 	<to>wordpress</to>
 	<to>wordpress-data</to>
 	<to>mediawiki</to>
@@ -88,8 +92,13 @@ the start of our new web site
 </edge>
 
 <order head="database-sec">
+	<tail>wordpress-sec</tail>
 	<tail>wordpress</tail>
 	<tail>mediawiki</tail>
+</order>
+
+<order head="wordpress-sec">
+	<tail>wordpress</tail>
 </order>
 
 <order head="wordpress">

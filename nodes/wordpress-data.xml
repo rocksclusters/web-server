@@ -8,6 +8,9 @@ WordPress data
 
 <changelog>
 $Log: wordpress-data.xml,v $
+Revision 1.25  2011/06/16 22:06:57  phil
+Add explicit wordpress DB passwd.
+
 Revision 1.24  2011/05/01 02:54:51  phil
 Updated Wordpress.
 New theme for cluster web site
@@ -109,7 +112,7 @@ cat wordpress3-structure.sql wordpress3-data-generic.sql wordpress3-data-local.s
 '&amp;Kickstart_PublicDNSDomain;':'&Kickstart_PublicDNSDomain;', 
 '&amp;Wordpress_PressDate;':\"$PDATE\", 
 '&amp;Kickstart_PrivatePortableRootPassword;':\"$PPASS\", 
-'&amp;Info_ClusterContact;':'&Info_ClusterContact;' }" | /opt/rocks/bin/mysql -u wordpress wordpress 
+'&amp;Info_ClusterContact;':'&Info_ClusterContact;' }" | /opt/rocks/bin/mysql --defaults-extra-file=/opt/rocks/etc/.wordpress.my.cnf -u wordpress wordpress 
 </post>
 
 </kickstart>
