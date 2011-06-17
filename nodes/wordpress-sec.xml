@@ -1,8 +1,15 @@
-<?xml standalone='no' version='1.0' ?>
-
 <kickstart>
 
+<post>
+
+<!-- Copy wp-config.php from wpdb template --> 
+mkdir -p /var/www/html/wordpress
+<file name="/var/www/html/wordpress/wp-config.php" owner="root.apache"  expr="cat /var/www/html/wordpress/wpdb/wp-config.php"/>
+
+</post>
+
 <!-- Access control on the database -->
+
 <post interpreter='/opt/rocks/bin/python'>
 import os
 import sys
@@ -35,10 +42,9 @@ except:
 
 cmd_set = []
 
-# Password Access for the apache
+# Password Access for the wordpress
 wordpress_pass = string.strip(base64.b64encode(os.urandom(16), './')[0:16])
 cmd_set.append('set password for wordpress@localhost=PASSWORD("%s")' % wordpress_pass)
-cmd_set.append('set password for wordpress@&Kickstart_PrivateHostname;=PASSWORD("%s")' % wordpress_pass)
 
 # Add wordpress password access to wordpress MySQL config file
 f = open('/opt/rocks/etc/.wordpress.my.cnf', 'w')
@@ -49,18 +55,20 @@ f.close()
 for cmd in cmd_set:
 	db.execute(cmd)
 
+## Fix password for wordpress DB access
+## This password is different than the 'admin' password used internally
+## for wordpress authoring
+
+f = open('/var/www/html/wordpress/wp-config.php', 'r+')
+buffer = f.readlines()
+f.seek(0)
+passwdpattern=re.compile('DB_PASSWORD')
+for line in buffer:
+	if passwdpattern.search(line):
+		f.write("define('DB_PASSWORD','%s');\n" % wordpress_pass)
+	else:
+		f.write(line)
+f.close()
 </post>
 
-<post>
-## Ownership in the wordpress database
-chown root:apache /opt/rocks/etc/.wordpress.my.cnf
-chmod 0640 /opt/rocks/etc/.wordpress.my.cnf
-
-## Wordpress needs its in own copy of password in wp-config.php
-#
-WPPASS=`/bin/awk '/^password/{ print $3}'  /opt/rocks/etc/.wordpress.my.cnf` 
-<file name="/var/www/html/wordpress/wp-config.php" mode="append"/>
-/bin/sed  -e "s/define('DB_PASSWORD', '')/define('DB_PASSWORD', \'$WPPASS\')/"  /var/www/html/wordpress/wp-config.php
-<file name="/var/www/html/wordpress/wp-config.php" mode="append"/>
-</post>
 </kickstart>

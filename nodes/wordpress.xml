@@ -8,6 +8,9 @@ WordPress configuration
 
 <changelog>
 $Log: wordpress.xml,v $
+Revision 1.31  2011/06/17 05:37:16  phil
+database permissions fixup.
+
 Revision 1.30  2011/06/16 22:06:57  phil
 Add explicit wordpress DB passwd.
 
@@ -119,10 +122,6 @@ the start of our new web site
 <package>wordpress</package>
 
 <post>
-
-mkdir -p /var/www/html/wordpress
-
-<file name="/var/www/html/wordpress/wp-config.php" owner="root.apache"  expr="cat /var/www/html/wordpress/wpdb/wp-config.php"/>
 
 <!-- redirect the default directory lookup to wordpress -->
 <file name="/var/www/html/index.html" owner="root.apache">
