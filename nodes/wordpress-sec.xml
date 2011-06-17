@@ -43,8 +43,9 @@ except:
 cmd_set = []
 
 # Password Access for the wordpress
+cmd_set.append("CREATE USER 'wordpress'@'localhost'")
 wordpress_pass = string.strip(base64.b64encode(os.urandom(16), './')[0:16])
-cmd_set.append('set password for wordpress@localhost=PASSWORD("%s")' % wordpress_pass)
+cmd_set.append("SET PASSWORD FOR 'wordpress'@'localhost'=PASSWORD('%s')" % wordpress_pass)
 
 # Add wordpress password access to wordpress MySQL config file
 f = open('/opt/rocks/etc/.wordpress.my.cnf', 'w')
