@@ -11,4 +11,4 @@ They are split as
 A sample SQL File would then be generated as
 PDATE=`date +'%F %T'`
 cat wordpress3-structure.sql wordpress3-data-generic.sql wordpress3-data-local.sql | \
-./localize.py "{ '&hostname;':'test','&Kickstart_PublicDNSDomain;':'rocksclusters.org', '&Wordpress_PressDate;':\"$PDATE\", '&Kickstart_PrivatePortableRootPassword;': '', '&Info_ClusterContact;':'user@admin.com' }"
+./localize.py "{ '&hostname;':'test','&Kickstart_PublicDNSDomain;':'rocksclusters.org', '&Wordpress_PressDate;':\"$PDATE\", '&Info_ClusterContact;':'user@admin.com' }"

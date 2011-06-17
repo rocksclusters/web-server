@@ -8,6 +8,10 @@ WordPress data
 
 <changelog>
 $Log: wordpress-data.xml,v $
+Revision 1.26  2011/06/17 18:16:06  phil
+Scrub root password from the installation and set the admin password to
+a string that never hashes
+
 Revision 1.25  2011/06/16 22:06:57  phil
 Add explicit wordpress DB passwd.
 
@@ -111,7 +115,6 @@ cat wordpress3-structure.sql wordpress3-data-generic.sql wordpress3-data-local.s
 ./localize.py "{ '&amp;hostname;':'&hostname;',
 '&amp;Kickstart_PublicDNSDomain;':'&Kickstart_PublicDNSDomain;', 
 '&amp;Wordpress_PressDate;':\"$PDATE\", 
-'&amp;Kickstart_PrivatePortableRootPassword;':\"$PPASS\", 
 '&amp;Info_ClusterContact;':'&Info_ClusterContact;' }" | /opt/rocks/bin/mysql --defaults-extra-file=/opt/rocks/etc/.wordpress.my.cnf -u wordpress wordpress 
 </post>
 

@@ -4,7 +4,7 @@
 */
 
 LOCK TABLES `wp_users` WRITE;
-INSERT INTO `wp_users` VALUES (1,'admin','&Kickstart_PrivatePortableRootPassword;','admin','&Info_ClusterContact;',','',','&Wordpress_PressDate;','',0,'admin');
+INSERT INTO `wp_users` VALUES (1,'admin','**unbreakable**','admin','&Info_ClusterContact;',','',','&Wordpress_PressDate;','',0,'admin');
 UNLOCK TABLES;
 
 
