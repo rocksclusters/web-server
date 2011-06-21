@@ -8,6 +8,10 @@ WordPress data
 
 <changelog>
 $Log: wordpress-data.xml,v $
+Revision 1.27  2011/06/21 17:21:18  phil
+
+last vestige of root password removed.
+
 Revision 1.26  2011/06/17 18:16:06  phil
 Scrub root password from the installation and set the admin password to
 a string that never hashes
@@ -110,7 +114,6 @@ touch ups
 <!-- Populate the Wordpress Database will Generic and Initial Post Information --> 
 cd /var/www/html/wordpress/wpdb
 PDATE=`date +'%F %T'`
-PPASS='&Kickstart_PrivatePortableRootPassword;' 
 cat wordpress3-structure.sql wordpress3-data-generic.sql wordpress3-data-local.sql | \
 ./localize.py "{ '&amp;hostname;':'&hostname;',
 '&amp;Kickstart_PublicDNSDomain;':'&Kickstart_PublicDNSDomain;', 
