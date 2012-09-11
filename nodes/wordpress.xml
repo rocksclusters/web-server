@@ -8,6 +8,9 @@ WordPress configuration
 
 <changelog>
 $Log: wordpress.xml,v $
+Revision 1.32  2012/09/11 17:08:43  clem
+DB creation can now be re-run multiple times
+
 Revision 1.31  2011/06/17 05:37:16  phil
 database permissions fixup.
 
@@ -137,6 +140,7 @@ the start of our new web site
 
 <!-- setup the wordpress database permissions -->
 <file name="/tmp/wordpress-perms.sql">
+DROP DATABASE if exists wordpress ;
 CREATE DATABASE wordpress;
 GRANT ALL PRIVILEGES ON wordpress.* TO "wordpress"@"localhost";
 </file>

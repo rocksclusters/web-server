@@ -42,6 +42,10 @@ except:
 
 cmd_set = []
 
+# This is to delete the user if already exists on the DB since there is 
+# no if exist for users
+cmd_set.append("GRANT USAGE ON *.* TO 'wordpress'@'localhost'")
+cmd_set.append("DROP USER 'wordpress'@'localhost'")
 # Password Access for the wordpress
 cmd_set.append("CREATE USER 'wordpress'@'localhost'")
 wordpress_pass = string.strip(base64.b64encode(os.urandom(16), './')[0:16])
