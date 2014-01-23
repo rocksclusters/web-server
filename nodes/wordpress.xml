@@ -145,7 +145,7 @@ CREATE DATABASE wordpress;
 GRANT ALL PRIVILEGES ON wordpress.* TO "wordpress"@"localhost";
 </file>
 
-/opt/rocks/bin/mysql --defaults-extra-file=/root/.rocks.my.cnf \
+/opt/rocks/mysql/bin/mysql --defaults-extra-file=/root/.rocks.my.cnf \
 	--user=root mysql &lt; /tmp/wordpress-perms.sql
 
 rm -f /tmp/wordpress-perms.sql

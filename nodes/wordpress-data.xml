@@ -118,7 +118,7 @@ cat wordpress3-structure.sql wordpress3-data-generic.sql wordpress3-data-local.s
 ./localize.py "{ '&amp;hostname;':'&hostname;',
 '&amp;Kickstart_PublicDNSDomain;':'&Kickstart_PublicDNSDomain;', 
 '&amp;Wordpress_PressDate;':\"$PDATE\", 
-'&amp;Info_ClusterContact;':'&Info_ClusterContact;' }" | /opt/rocks/bin/mysql --defaults-extra-file=/opt/rocks/etc/.wordpress.my.cnf -u wordpress wordpress 
+'&amp;Info_ClusterContact;':'&Info_ClusterContact;' }" | /opt/rocks/mysql/bin/mysql --defaults-extra-file=/opt/rocks/etc/.wordpress.my.cnf -u wordpress wordpress 
 </post>
 
 </kickstart>
