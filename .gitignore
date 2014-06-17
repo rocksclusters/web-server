@@ -1,0 +1,49 @@
+
+# build directory
+BUILD/
+RPMS/
+SOURCES/
+SPECS/
+
+
+*.pyc
+
+_os
+_arch
+_distribution
+
+# ignore version.mk
+rocks-version.mk
+rocks-version-common.mk
+
+# ignore python.mk
+python.mk
+
+# ignore Rules files
+Rules-install.mk
+Rules-linux-centos.mk
+Rules-linux.mk
+Rules-rcfiles.mk
+Rules-scripts.mk
+Rules.mk
+Rolls.mk
+
+# --- BEGIN --- binaries files
+src/mediawiki/mediawiki-1.15.1.tar.gz
+src/mediawiki/mediawiki-1.16.0.tar.gz
+src/wordpress/wordpress-2.8.4.tar.gz
+src/wordpress/wordpress-3.0.1.tar.gz
+src/wordpress/wordpress-3.1.2.tar.gz
+src/wordpress/wordpress-3.1.3.tar.gz
+src/www.rockclusters.org/exec-php.4.9.zip
+src/www.rockclusters.org/images/2005-hpcwire-awards.graffle/image6.tiff
+src/www.rockclusters.org/images/3cds.graffle
+src/www.rockclusters.org/images/boot-roll.graffle
+src/www.rockclusters.org/images/optiportal.graffle/image7.jpg
+src/www.rockclusters.org/images/optiportal.graffle/image8.jpg
+src/www.rockclusters.org/images/optiportal.graffle/image9.JPG
+src/www.rockclusters.org/images/os-disk1.graffle
+src/www.rockclusters.org/images/os-disk2.graffle
+src/www.rockclusters.org/images/pyramids.graffle/image5.jpg
+src/www.rockclusters.org/margo-1.0.zip
+# --- END ---
