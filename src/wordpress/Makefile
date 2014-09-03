@@ -166,6 +166,10 @@ install::
 	)
 	mkdir -p $(ROOT)/$(HTTPDCONFD)
 	install -m644 $(CONFFILE) $(ROOT)/$(HTTPDCONFD)
+	# downloaded from https://raw.github.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+	# http://wp-cli.org/
+	mkdir -p $(ROOT)/usr/local/bin
+	install -m755 wp-cli.phar.0.16.0 $(ROOT)/usr/local/bin/wp
 	if [ ! -d $(ROOT)/$(PKGROOT)/wp-content/themes/$(BASETHEME) ]; then \
 		mkdir -p $(ROOT)/$(PKGROOT)/wp-content/themes/$(BASETHEME); fi
 	cd $(BASETHEME); find . -name CVS -prune -o -print |  	\
