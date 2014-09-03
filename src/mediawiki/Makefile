@@ -120,12 +120,13 @@ REDHAT.ROOT     = $(CURDIR)/../../
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 
+RPM.EXTRAS += "AutoReqProv: no"
+
 
 build:
 	gunzip -c $(NAME)-$(VERSION).tar.gz | $(TAR) -xf -
 	(								\
 		cd $(NAME)-$(VERSION);					\
-		chmod a+w config;					\
 	)
 	
 
