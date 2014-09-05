@@ -113,11 +113,11 @@ touch ups
 
 <!--
 #an attempt to proprely install wordpress which miserably failed :-(
-/usr/local/bin/wp core install --url=http://rocks-152.sdsc.edu/wordpress/ --title=rocks-152.sdsc.edu --admin_user=admin --admin_password='**ciao**' --admin_email='clem@sdsc.edu' 
+/usr/local/bin/wp core install -url=http://rocks-152.sdsc.edu/wordpress/ -title=rocks-152.sdsc.edu -admin_user=admin -admin_password='**ciao**' -admin_email='clem@sdsc.edu' 
 
 /usr/local/bin/wp theme install twentyten
 /usr/local/bin/wp option  update default_comment_status closed
-/usr/local/bin/wp post create /tmp/post.txt --post_status=publish --post_title='Cluster Installed' --comment_status=close
+/usr/local/bin/wp post create /tmp/post.txt -post_status=publish -post_title='Cluster Installed' -comment_status=close
 /usr/local/bin/wp option  update blogdescription "Communicate with and Monitor Your Rocks Cluster"
 -->
 
